@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/app_nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/alarmFragment"
+        android:name="com.example.thirdeye.ui.alarm.AlarmFragment"
+        android:label="fragment_alarm"
+        tools:layout="@layout/fragment_alarm" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.thirdeye.ui.main.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/camouflageFragment"
+        android:name="com.example.thirdeye.ui.camouflage.CamouflageFragment"
+        android:label="fragment_camouflage"
+        tools:layout="@layout/fragment_camouflage" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.thirdeye.ui.settings.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
+</navigation>
