@@ -1,10 +1,12 @@
 package com.example.thirdeye
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.example.thirdeye.databinding.ActivityMainBinding
 import com.example.thirdeye.permissions.DeviceAdminManager
 import com.example.thirdeye.permissions.Permissions
@@ -31,4 +33,7 @@ class MainActivity : AppCompatActivity() {
 
         permissions.checkAndRequest()
     }
+
+
+
 }

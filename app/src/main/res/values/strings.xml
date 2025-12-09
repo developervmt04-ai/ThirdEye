@@ -10,4 +10,26 @@
     <string name="Fingerprint_lock_text">Fingerprint Lock</string>
     <string name="description">Enable fingerprint to protect your app from unauthorized access.</string>
     <string name="enable_now">Enable Now</string>
+    <string name="fgNotificationTitle">Third Eye is Active</string>
+    <string name="fgNotifictaionText">Watching for Intrusions\n</string>
+    <string name="IntrusionNotificationTitle">Intruion Detected!</string>
+    <string name="intruderNotifiationText">SomeoneTried To Unlocl Your Phone Check Out!</string>
+    <string name="finger_print_lock">Finger Print Lock</string>
+    <string name="protect_app_from_intruders">Protect App From Intruders</string>
+    <string name="advance">Advance</string>
+    <string name="subscriptions">Subscriptions</string>
+    <string name="manage_subscriptions">Manage Subscriptions</string>
+    <string name="your_plan_billing_and_renewal_info">Your plan ,billing and renewal info</string>
+    <string name="general">General</string>
+    <string name="intruder_selfie">Intruder Selfie</string>
+    <string name="take_photos_after_01_wrong_attempts">Take Photos after 01 wrong attempts</string>
+    <string name="picture_delay">Picture Delay</string>
+    <string name="delayText">Setting this value to less than 1000ms may cause .</string>
+    <string name="widget_setup">Widget Setup</string>
+    <string name="add_widget">Add Widget</string>
+    <string name="how_to_add_widget">How to add widget?</string>
+    <string name="about">About</string>
+    <string name="share">Share</string>
+    <string name="terms_of_use">Terms of use</string>
+    <string name="privacy_policy">Privacy Policy</string>
 </resources>

@@ -13,7 +13,14 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.example.thirdeye.ui.main.HomeFragment"
-        android:label="HomeFragment" />
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_alarmFragment"
+            app:destination="@id/alarmFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
+    </fragment>
     <fragment
         android:id="@+id/camouflageFragment"
         android:name="com.example.thirdeye.ui.camouflage.CamouflageFragment"

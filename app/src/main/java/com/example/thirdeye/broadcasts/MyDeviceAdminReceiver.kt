@@ -4,6 +4,7 @@ import android.app.admin.DeviceAdminReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.UserHandle
+import com.example.thirdeye.service.CameraCaptureService
 
 class MyDeviceAdminReceiver: DeviceAdminReceiver() {
 
@@ -15,9 +16,13 @@ class MyDeviceAdminReceiver: DeviceAdminReceiver() {
         super.onDisabled(context, intent)
     }
 
-    override fun onPasswordFailed(context: Context, intent: Intent, user: UserHandle) {
-        super.onPasswordFailed(context, intent, user)
+    override fun onPasswordFailed(context: Context, intent: Intent) {
+        super.onPasswordFailed(context, intent)
+        CameraCaptureService.Instance?.captureIntruderPhoto()
+
+
     }
+
 
     override fun onPasswordSucceeded(context: Context, intent: Intent, user: UserHandle) {
         super.onPasswordSucceeded(context, intent, user)

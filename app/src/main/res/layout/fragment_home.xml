@@ -4,30 +4,91 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/appBgColor"
-    android:padding="16dp">
-    <!-- Main Card with Intruder Detection -->
+    android:fitsSystemWindows="true"
+    >
+
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/mainToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentLeft="true"
+        android:background="@color/appBgColor">
+
+        <LinearLayout
+            android:id="@+id/toolbarContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/settingIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:src="@drawable/setting_icon" />
+
+            <TextView
+                android:id="@+id/toolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <ImageView
+
+                android:id="@+id/camouflageIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:clickable="true"
+                android:layout_marginRight="8dp"
+                android:focusable="true"
+                android:src="@drawable/camouflage_icon" />
+        </LinearLayout>
+    </com.google.android.material.appbar.MaterialToolbar>
+
+
+    <View
+        android:id="@+id/toolbarDivider"
+        android:layout_width="match_parent"
+        android:layout_height=".7dp"
+        android:elevation="4dp"
+        android:layout_below="@id/mainToolbar"
+        android:background="@color/dividerColor" />
+
+
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCard"
         android:layout_width="match_parent"
         android:layout_height="350dp"
         android:layout_marginTop="20dp"
+        android:layout_below="@id/toolbarDivider"
         app:cardCornerRadius="20dp"
         app:cardElevation="8dp"
         android:backgroundTint="#3d4d6b">
 
         <RelativeLayout
+            android:id="@+id/imageContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <!-- Blurred Background Image (placeholder) -->
+
             <ImageView
                 android:id="@+id/blurredImage"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
-               />
+                android:scaleType="centerCrop" />
 
-            <!-- Intruder Icon and Text -->
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,7 +112,7 @@
                     android:layout_marginTop="12dp" />
             </LinearLayout>
 
-            <!-- Premium Badge -->
+
             <ImageView
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -62,7 +123,7 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-    <!-- Bottom Action Buttons -->
+
     <LinearLayout
         android:id="@+id/actionButtons"
         android:layout_width="match_parent"
@@ -73,7 +134,7 @@
         android:gravity="center"
         android:weightSum="3">
 
-        <!-- Add Widget Button -->
+
         <LinearLayout
             android:id="@+id/addWidgetBtn"
             android:layout_width="0dp"
@@ -98,7 +159,7 @@
                 android:layout_marginTop="8dp" />
         </LinearLayout>
 
-        <!-- Turn On Button (Power) -->
+
         <LinearLayout
             android:id="@+id/turnOnBtn"
             android:layout_width="0dp"
@@ -107,32 +168,50 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="12dp">
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                app:cardCornerRadius="35dp"
-                app:cardElevation="4dp"
-                android:backgroundTint="#2c3e5c">
 
-                <ImageView
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
+                <View
+                    android:id="@+id/outerRing"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:background="@drawable/ring_off" />
 
-                    android:tint="#4a90e2" />
-            </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/powerButton"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_centerInParent="true"
+                    app:cardCornerRadius="35dp"
+                    app:cardElevation="4dp"
+                    android:backgroundTint="#2c3e5c"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/powerIcon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/power_on" />
+
+                </androidx.cardview.widget.CardView>
+            </RelativeLayout>
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/turn_on"
+                android:text="Turn On"
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:layout_marginTop="8dp" />
         </LinearLayout>
 
-        <!-- Alarm Button -->
+
         <LinearLayout
             android:id="@+id/alarmBtn"
             android:layout_width="0dp"
@@ -158,7 +237,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <!-- Bottom Dropdown -->
+
     <TextView
         android:id="@+id/intruderDropdown"
         android:layout_width="wrap_content"
