@@ -1,5 +1,6 @@
 package com.example.thirdeye
 
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -12,19 +13,17 @@ import com.example.thirdeye.permissions.DeviceAdminManager
 import com.example.thirdeye.permissions.Permissions
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var permissions: Permissions
+    lateinit var permissions: Permissions
     private lateinit var deviceAdminManager: DeviceAdminManager
 
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-
         deviceAdminManager= DeviceAdminManager(this)
          permissions= Permissions(this)
+        permissions.checkAndRequest()
 
         if (!deviceAdminManager.isDeviceAdminActive()){
 

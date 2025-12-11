@@ -1,0 +1,70 @@
+package com.example.thirdeye.data.encryptedStorage
+
+import android.content.Context
+import androidx.security.crypto.EncryptedFile
+import androidx.security.crypto.MasterKey
+import com.google.common.primitives.Bytes
+import java.io.File
+
+class EncryptedStorageRepository(private val context: Context) {
+    private val dirName="Intruders"
+
+
+    private fun getOrCreateDir(): File{
+        val dir= File(context.filesDir,dirName)
+        if (!dir.exists()) dir.mkdirs()
+        return dir
+    }
+
+    private fun createMasterKey(): MasterKey{
+        return MasterKey.Builder(context)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+    }
+     fun saveEncryptedImage(bytes: ByteArray): File{
+
+
+        val dir=getOrCreateDir()
+        val file= File(dir,"intruder_${System.currentTimeMillis()}.jpg")
+        val masterKey=createMasterKey()
+
+        val encryptedFile= EncryptedFile.Builder(
+            context,
+            file,
+            masterKey,
+            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+        ).build()
+
+        encryptedFile.openFileOutput().use {
+            output->
+            output.write(bytes)
+        }
+
+        return file
+
+    }
+     fun readEncryptedImage(file: File): ByteArray{
+
+        val masterKey=createMasterKey()
+        val encryptedFile= EncryptedFile.Builder(
+
+            context,
+            file,
+            masterKey,
+            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+
+        ).build()
+        return encryptedFile.openFileInput().use {
+            it.readBytes()
+        }
+    }
+    fun listOfImages(): List<File> {
+        val dir = getOrCreateDir()
+        return dir.listFiles { file -> file.isFile }
+            ?.sortedByDescending { it.lastModified() }
+            ?: emptyList()
+    }
+    fun deleteImage(file: File): Boolean=file.delete()
+
+
+}

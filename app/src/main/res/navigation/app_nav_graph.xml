@@ -16,10 +16,25 @@
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_alarmFragment"
-            app:destination="@id/alarmFragment" />
+            app:destination="@id/alarmFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_right"
+            />
         <action
             android:id="@+id/action_homeFragment_to_settingFragment"
-            app:destination="@id/settingFragment" />
+            app:destination="@id/settingFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"
+ />
+        <action
+            android:id="@+id/action_homeFragment_to_intrudersFragment"
+            app:destination="@id/intrudersFragment"
+            app:enterAnim="@anim/slide_in_bottom"
+            app:popExitAnim="@anim/slide_out_bottom"/>
+        <action
+            android:id="@+id/action_homeFragment_to_camouflageFragment"
+            app:destination="@id/camouflageFragment"
+            app:enterAnim="@anim/slide_in_right"/>
     </fragment>
     <fragment
         android:id="@+id/camouflageFragment"
@@ -31,4 +46,29 @@
         android:name="com.example.thirdeye.ui.settings.SettingFragment"
         android:label="fragment_setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/intrudersFragment"
+        android:name="com.example.thirdeye.ui.intruders.IntrudersFragment"
+        android:label="IntrudersFragment"
+        >
+        <action
+            android:id="@+id/action_intrudersFragment_to_camouflageFragment"
+            app:destination="@id/camouflageFragment"
+            app:enterAnim="@anim/slide_in_right"
+            />
+        <action
+            android:id="@+id/action_intrudersFragment_to_intruderDetailFragment"
+            app:destination="@id/intruderDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/intruderDetailFragment"
+        android:name="com.example.thirdeye.ui.intruders.IntruderDetail.IntruderDetailFragment"
+        android:label="fragment_intruder_detail"
+        tools:layout="@layout/fragment_intruder_detail" >
+        <argument
+            android:name="images"
+            app:argType="com.example.thirdeye.data.models.IntrudersImages"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

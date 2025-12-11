@@ -12,8 +12,14 @@ navigation = "2.8.5"
 navigationFragmentKtxVersion = "2.9.6"
 navigationUiKtxVersion = "2.9.6"
 constraintlayout = "2.2.1"
+glide = "4.16.0"
+
+
+navigationSafeArgsGenerator = "1.0.0"
 
 [libraries]
+glide-compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
+
 androidx-navigation-fragment-ktx = { module = "androidx.navigation:navigation-fragment-ktx", version.ref = "navigation" }
 androidx-navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.ref = "navigation" }
 
@@ -27,8 +33,11 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+navigation-safe-args-generator = { group = "android.arch.navigation", name = "navigation-safe-args-generator", version.ref = "navigationSafeArgsGenerator" }
 
 [plugins]
+navigation-safe-args = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigationFragmentKtxVersion" }
+
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 

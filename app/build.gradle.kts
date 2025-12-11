@@ -1,6 +1,10 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.navigation.safe.args)
+
+    id("kotlin-parcelize")
+    id("kotlin-kapt")
 }
 
 android {
@@ -46,21 +50,20 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
-    // ✅ CameraX — use consistent version
+
     implementation("androidx.camera:camera-core:1.3.4")
     implementation("androidx.camera:camera-camera2:1.3.4")
     implementation("androidx.camera:camera-lifecycle:1.3.4")
     implementation("androidx.camera:camera-view:1.3.4")
-    implementation("androidx.camera:camera-extensions:1.3.4") // optional but good to add
-
-    // Required for CameraX ProcessCameraProvider
+    implementation("androidx.camera:camera-extensions:1.3.4")
     implementation("com.google.guava:guava:33.5.0-android")
-    // AndroidX Lifecycle (for LifecycleService)
+
     implementation("androidx.lifecycle:lifecycle-service:2.8.7")
     implementation("androidx.work:work-runtime-ktx:2.9.0")
 
@@ -69,4 +72,13 @@ dependencies {
 
     implementation("androidx.navigation:navigation-fragment-ktx:2.9.4")
     implementation("androidx.navigation:navigation-ui-ktx:2.9.4")
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+    implementation("com.github.bumptech.glide:glide:4.16.0")
+
+
+    kapt("com.github.bumptech.glide:compiler:4.16.0")
+    implementation("androidx.security:security-crypto:1.1.0-alpha06")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
 }

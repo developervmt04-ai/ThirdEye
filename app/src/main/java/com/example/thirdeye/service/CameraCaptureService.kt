@@ -11,15 +11,16 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CaptureRequest
+import android.media.Image
 import android.media.ImageReader
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
-import android.os.IBinder
 import android.util.Log
-import androidx.collection.intSetOf
 import androidx.core.content.ContextCompat
+import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.notifications.Notifications
+import java.nio.ByteBuffer
 
 class CameraCaptureService : Service() {
 
@@ -42,11 +43,14 @@ class CameraCaptureService : Service() {
     private var imageReader: ImageReader? = null
     private lateinit var bgThread: HandlerThread
     private lateinit var bgHandler: Handler
+
+    private lateinit var repo: EncryptedStorageRepository
     private var appPendingIntent: PendingIntent? = null
 
     override fun onCreate() {
         super.onCreate()
         Instance = this
+        repo= EncryptedStorageRepository(applicationContext)
         Notifications.createChannels(this)
         startForeground(NOTIF_ID, Notifications.persistentNotification(this))
 
@@ -60,7 +64,10 @@ class CameraCaptureService : Service() {
         imageReader!!.setOnImageAvailableListener({ reader ->
             val images = reader.acquireLatestImage() ?: return@setOnImageAvailableListener
             images.let {
-                saveImage()
+                val bytes=imageToByteArray(it)
+                repo.saveEncryptedImage(bytes)
+
+                showNotification()
                 it.close()
             }
         }, bgHandler)
@@ -116,7 +123,8 @@ class CameraCaptureService : Service() {
         )
     }
 
-    fun saveImage() {
+    fun showNotification() {
+
         getSystemService(NotificationManager::class.java).notify(
             101,
             Notifications.intrusionNotification(this)
@@ -124,6 +132,14 @@ class CameraCaptureService : Service() {
 
 
     }
+    private fun imageToByteArray(image: Image): ByteArray {
+        val plane = image.planes[0]
+        val buffer: ByteBuffer = plane.buffer
+        val bytes = ByteArray(buffer.remaining())
+        buffer.get(bytes)
+        return bytes
+    }
+
 
     fun captureIntruderPhoto() {
         cameraDevice ?: return

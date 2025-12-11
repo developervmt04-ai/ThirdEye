@@ -32,4 +32,19 @@
     <string name="share">Share</string>
     <string name="terms_of_use">Terms of use</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="intruders">Intruders</string>
+    <string name="not_intruder_found">Not Intruder Found</string>
+    <string name="emptydescription">if someone tries to open we will </string>
+    <string name="alarmtitle">Enable Audible Alarm</string>
+    <string name="attempt">Get loud alert on wrong attempt</string>
+    <string name="select_alarm">Select Alarm</string>
+    <string name="beep">Beep</string>
+    <string name="configuration">Configuration</string>
+    <string name="audible_alarm">Audible Alarm</string>
+    <string name="permissions">Set Up Permissions</string>
+    <string name="permdescription">To enable intruder alert please allow us</string>
+    <string name="allow">Allow</string>
+    <string name="unlock_app">Unlock App</string>
+    <string name="bioMetricError">Authentication error </string>
+    <string name="biometricDescription">User Your Finger Prints To Unlock the App</string>
 </resources>

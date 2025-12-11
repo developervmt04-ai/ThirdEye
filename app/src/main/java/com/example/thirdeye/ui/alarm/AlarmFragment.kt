@@ -13,6 +13,7 @@ import android.widget.ImageView
 import androidx.cardview.widget.CardView
 import androidx.core.app.NotificationCompat.getColor
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentAlarmBinding
 
@@ -37,31 +38,9 @@ class AlarmFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
-
-
-
-       var   isOn:Boolean  = false
-
-      binding.  powerButton.setOnClickListener {
-            isOn = !isOn;
-
-            if (isOn) {
-
-               binding. outerRing.setBackgroundResource(R.drawable.ring_on)
-                binding.   powerButton.setCardBackgroundColor(Color.parseColor("#00E5FF"))
-                binding.  powerIcon.setColorFilter(Color.parseColor("#00E5FF"))
-            } else {
-
-                binding. outerRing.setBackgroundResource(R.drawable.ring_off)
-                binding. powerButton.setCardBackgroundColor(Color.parseColor("#FFFFFF"))
-                binding. powerIcon.setColorFilter(Color.parseColor("#FFFFFF"))
-            }
+        binding.backIcon.setOnClickListener {
+            findNavController().navigateUp()
         }
-
-
-
 
 
     }

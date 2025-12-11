@@ -7,10 +7,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import com.example.thirdeye.MainActivity
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentHomeBinding
 import com.example.thirdeye.service.CameraCaptureService
 import com.example.thirdeye.ui.dialogs.FingerPrintDialog
+import com.example.thirdeye.ui.dialogs.permissionsDialog.PermissionDialog
 
 
 class HomeFragment : Fragment() {
@@ -32,6 +34,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         var isOn: Boolean = false
 
         binding.powerButton.setOnClickListener {
@@ -51,13 +55,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-
-        /*        FingerPrintDialog(requireContext())
-                    .setTitle("Enable Now").setMessage("Enable fingerprint to protect your app from unauthorized access").onOk {
-
-
-
-                    }.show()*/
         binding.alarmBtn.setOnClickListener {
 
             findNavController().navigate(R.id.action_homeFragment_to_alarmFragment)
@@ -65,6 +62,15 @@ class HomeFragment : Fragment() {
 
         binding.settingIcon.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
+
+        }
+        binding.intruderDropdown.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_intrudersFragment)
+
+        }
+        binding.camouflageIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_camouflageFragment)
+
 
         }
 
