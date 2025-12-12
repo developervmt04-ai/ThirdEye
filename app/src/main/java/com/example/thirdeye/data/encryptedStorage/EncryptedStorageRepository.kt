@@ -3,11 +3,11 @@ package com.example.thirdeye.data.encryptedStorage
 import android.content.Context
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKey
+import com.example.thirdeye.constants.Constants.dirName
 import com.google.common.primitives.Bytes
 import java.io.File
 
 class EncryptedStorageRepository(private val context: Context) {
-    private val dirName="Intruders"
 
 
     private fun getOrCreateDir(): File{

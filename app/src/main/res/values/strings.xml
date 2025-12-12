@@ -47,4 +47,10 @@
     <string name="unlock_app">Unlock App</string>
     <string name="bioMetricError">Authentication error </string>
     <string name="biometricDescription">User Your Finger Prints To Unlock the App</string>
+    <string name="noBMHA">No biometric hardware available</string>
+    <string name="noBmh">Device Has no Biometric Hardware</string>
+    <string name="addFingerPrint">No fingerprints enrolled. Set up in settings.</string>
+    <string name="history">History</string>
+    <string name="seewho">See who tried to unlock Your phone</string>
+    <string name="addTitle">Add Intruder Widget Now</string>
 </resources>

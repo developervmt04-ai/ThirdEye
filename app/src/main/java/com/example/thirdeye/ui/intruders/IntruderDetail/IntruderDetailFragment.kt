@@ -5,15 +5,21 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentIntruderDetailBinding
+import com.example.thirdeye.ui.intruders.IntruderPhotosViewModel
+import kotlinx.coroutines.launch
 
 
 class IntruderDetailFragment : Fragment() {
     private lateinit var binding: FragmentIntruderDetailBinding
     private val args: IntruderDetailFragmentArgs by navArgs()
+    private val viewModel: IntruderPhotosViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +40,31 @@ class IntruderDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val intruderData=args.images
         binding.image.setImageBitmap(intruderData?.bitmap)
+
+        binding.deleteIcon.setOnClickListener {
+            lifecycleScope.launch {
+
+                intruderData?.file?.let {file->
+                    viewModel.deleteImage(file)
+                    requireActivity().onBackPressed()
+                }
+
+            }
+            binding.historyIcon.setOnClickListener {
+               findNavController().navigate(R.id.action_intruderDetailFragment_to_historyFragment)
+
+
+
+            }
+
+
+
+
+
+
+        }
+
+
 
 
 

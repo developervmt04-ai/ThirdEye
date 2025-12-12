@@ -37,7 +37,7 @@
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Add Intruder Widget Now"
+                android:text="@string/addTitle"
                 android:textSize="18sp"
                 android:textStyle="bold"/>
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 style="@style/DescriptionText"
-                android:text="Easily Check the Intruder"
+                android:text="@string/Add_Widget"
           />
 
 

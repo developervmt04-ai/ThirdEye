@@ -1,17 +1,15 @@
 package com.example.thirdeye.biometrics
 
 
-import android.content.SharedPreferences
-import android.os.CpuHeadroomParams
 import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
-import com.example.thirdeye.MainActivity
 import com.example.thirdeye.R
 import com.example.thirdeye.constants.Constants.LOCK_KEY
+import com.example.thirdeye.helper.BiometricPrefs
 
 class BiometricHelper(private val activity: FragmentActivity) {
 
@@ -23,13 +21,13 @@ class BiometricHelper(private val activity: FragmentActivity) {
         return when (bm.canAuthenticate()) {
             BiometricManager.BIOMETRIC_SUCCESS -> true
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
-                Toast.makeText(activity, "No biometric hardware available", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, activity.getString(R.string.noBMHA), Toast.LENGTH_SHORT)
                     .show()
                 false
             }
 
             BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
-                Toast.makeText(activity, "Biometric hardware unavailable", Toast.LENGTH_SHORT)
+                Toast.makeText(activity, activity.getString(R.string.noBmh), Toast.LENGTH_SHORT)
                     .show()
                 false
             }
@@ -37,7 +35,7 @@ class BiometricHelper(private val activity: FragmentActivity) {
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
                 Toast.makeText(
                     activity,
-                    "No fingerprints enrolled. Set up in settings.",
+                    activity.getString(R.string.addFingerPrint),
                     Toast.LENGTH_SHORT
                 ).show()
                 false
@@ -50,32 +48,30 @@ class BiometricHelper(private val activity: FragmentActivity) {
 
     }
 
-    fun authenticate(onSuccess:()-> Unit){
-        if (!isBiometricAvailable())return
-        val bmP= BiometricPrompt(activity,executor,object : BiometricPrompt.AuthenticationCallback(){
+    fun authenticate(onSuccess: () -> Unit) {
+        if (!isBiometricAvailable()) return
+        val bmP =
+            BiometricPrompt(activity, executor, object : BiometricPrompt.AuthenticationCallback() {
 
-            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                super.onAuthenticationSucceeded(result)
-                onSuccess()
-            }
+                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                    super.onAuthenticationSucceeded(result)
+                    onSuccess()
+                }
 
-            override fun onAuthenticationFailed() {
-                super.onAuthenticationFailed()
-                Toast.makeText(activity, R.string.bioMetricError, Toast.LENGTH_SHORT).show()
-                activity.finishAffinity()
-            }
+                override fun onAuthenticationFailed() {
+                    super.onAuthenticationFailed()
+                    Toast.makeText(activity, R.string.bioMetricError, Toast.LENGTH_SHORT).show()
+                    activity.finishAffinity()
+                }
 
-            override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                super.onAuthenticationError(errorCode, errString)
-                activity.finish()
-            }
-
-
-
+                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
+                    super.onAuthenticationError(errorCode, errString)
+                    activity.finish()
+                }
 
 
-        })
-        val pi= BiometricPrompt.PromptInfo.Builder()
+            })
+        val pi = BiometricPrompt.PromptInfo.Builder()
             .setTitle(activity.getString(R.string.unlock_app))
             .setSubtitle(activity.getString(R.string.biometricDescription))
             .setNegativeButtonText("Cancel")
@@ -83,36 +79,32 @@ class BiometricHelper(private val activity: FragmentActivity) {
         bmP.authenticate(pi)
 
 
-
-
     }
-    fun toggleAppLock(enable: Boolean,sharedPref:SharedPreferences,onSwitchUpdated:(Boolean)->Unit){
-        if (!enable){
 
-            sharedPref.edit(){putBoolean(LOCK_KEY,false)}
+    fun toggleAppLock(
+        enable: Boolean,
+        prefs: BiometricPrefs,
+        onSwitchUpdated: (Boolean) -> Unit
+    ) {
+        if (!enable) {
+
+            prefs.setBiometricKeyEnabled(false)
             onSwitchUpdated(false)
             return
         }
-        if (!isBiometricAvailable()){
+
+        if (!isBiometricAvailable()) {
+
             onSwitchUpdated(false)
             return
-
         }
+
+
         authenticate {
-            sharedPref.edit(){putBoolean(LOCK_KEY,true)}
+            prefs.setBiometricKeyEnabled(true)
             onSwitchUpdated(true)
-
-
         }
-
-
-
-
-
-
-
     }
-
 
 
 }

@@ -2,11 +2,10 @@ package com.example.thirdeye.ui.dialogs
 
 import android.app.Dialog
 import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import com.example.thirdeye.databinding.GeneralDialogBinding
 
-class GeneralDialog (context: Context){
+class AddWidgetDialog (context: Context){
 
     val dialog= Dialog(context)
     val binding= GeneralDialogBinding.inflate(LayoutInflater.from(context))
@@ -21,29 +20,33 @@ class GeneralDialog (context: Context){
         }
     }
 
-    fun setTitle(title:String): GeneralDialog{
+    fun setTitle(title:String): AddWidgetDialog{
         binding.title.text=title
         return this
 
 
     }
-    fun setDescription(msg:String): GeneralDialog{
+    fun setDescription(msg:String): AddWidgetDialog{
         binding.description.text=msg
         return  this
 
 
     }
-    fun onClick(action:()-> Unit){
+    fun onClick(action:()-> Unit): AddWidgetDialog{
         binding.addWidget.setOnClickListener {
             action()
             dialog.dismiss()
 
 
 
+
         }
-        fun show(){
+        return this
+    }
+        fun show(): AddWidgetDialog{
 
             dialog.show()
+            return this
         }
 
 
@@ -51,4 +54,3 @@ class GeneralDialog (context: Context){
 
 
 
-}

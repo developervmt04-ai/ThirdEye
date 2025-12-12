@@ -26,7 +26,7 @@ class IntruderImageAdapter(): RecyclerView.Adapter<IntruderImageAdapter.ViewHold
 
         if (items.isLocked) {
 
-            holder.binding.intruderImage.setImageResource(R.drawable.blurbg)
+            holder.binding.intruderImage.setImageResource(R.drawable.locked)
             holder.binding.root.setOnClickListener {
                 onLockedClick?.invoke(items)
             }

@@ -11,12 +11,16 @@ import com.example.thirdeye.MainActivity
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentHomeBinding
 import com.example.thirdeye.service.CameraCaptureService
+import com.example.thirdeye.ui.dialogs.AddWidgetDialog
+import com.example.thirdeye.ui.dialogs.AudibleDialog
 import com.example.thirdeye.ui.dialogs.FingerPrintDialog
 import com.example.thirdeye.ui.dialogs.permissionsDialog.PermissionDialog
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var audioDialog: AudibleDialog
+    private lateinit var addWidgetDialog: AddWidgetDialog
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,10 +58,14 @@ class HomeFragment : Fragment() {
                 binding.powerIcon.setColorFilter(Color.parseColor("#FFFFFF"))
             }
         }
-
         binding.alarmBtn.setOnClickListener {
-
-            findNavController().navigate(R.id.action_homeFragment_to_alarmFragment)
+            AudibleDialog(requireContext())
+                .setTitle(getString(R.string.alarmtitle))
+                .setMessage(getString(R.string.attempt))
+                .onClick {
+                    findNavController().navigate(R.id.action_homeFragment_to_alarmFragment)
+                }
+                .show()
         }
 
         binding.settingIcon.setOnClickListener {
@@ -70,6 +78,16 @@ class HomeFragment : Fragment() {
         }
         binding.camouflageIcon.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_camouflageFragment)
+
+
+        }
+        binding.addWidgetBtn.setOnClickListener {
+            addWidgetDialog= AddWidgetDialog(requireContext())
+            addWidgetDialog.setTitle(getString(R.string.addTitle))
+                .setDescription(getString(R.string.add_widget)).onClick { it
+                    findNavController().navigate(R.id.action_homeFragment_to_widgetFragment)
+
+                }.show()
 
 
         }

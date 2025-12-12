@@ -35,6 +35,12 @@
             android:id="@+id/action_homeFragment_to_camouflageFragment"
             app:destination="@id/camouflageFragment"
             app:enterAnim="@anim/slide_in_right"/>
+        <action
+            android:id="@+id/action_homeFragment_to_widgetFragment"
+            app:destination="@id/widgetFragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_left"
+            />
     </fragment>
     <fragment
         android:id="@+id/camouflageFragment"
@@ -59,6 +65,9 @@
         <action
             android:id="@+id/action_intrudersFragment_to_intruderDetailFragment"
             app:destination="@id/intruderDetailFragment" />
+        <action
+            android:id="@+id/action_intrudersFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
     <fragment
         android:id="@+id/intruderDetailFragment"
@@ -70,5 +79,18 @@
             app:argType="com.example.thirdeye.data.models.IntrudersImages"
             app:nullable="true"
             android:defaultValue="@null" />
+        <action
+            android:id="@+id/action_intruderDetailFragment_to_historyFragment"
+            app:destination="@id/historyFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.example.thirdeye.ui.intruders.IntruderDetail.history.HistoryFragment"
+        android:label="fragment_history"
+        tools:layout="@layout/fragment_history" />
+    <fragment
+        android:id="@+id/widgetFragment"
+        android:name="com.example.thirdeye.ui.widget.WidgetFragment"
+        android:label="fragment_widget"
+        tools:layout="@layout/fragment_widget" />
 </navigation>

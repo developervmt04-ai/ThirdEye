@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +16,7 @@ import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.data.models.IntrudersImages
 import com.example.thirdeye.databinding.FragmentIntrudersBinding
 import com.example.thirdeye.ui.dialogs.FingerPrintDialog
+import kotlinx.coroutines.launch
 
 
 class IntrudersFragment : Fragment() {
@@ -44,6 +46,11 @@ class IntrudersFragment : Fragment() {
 
             findNavController().navigateUp()
         }
+        binding.historyIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_intrudersFragment_to_historyFragment)
+        }
+
+
 
 
         setUpIntruderRv()
@@ -54,9 +61,10 @@ class IntrudersFragment : Fragment() {
 
         }
         intruderImageAdapter.onLockedClick ={
-            val dialog=FingerPrintDialog(requireContext())
-            dialog.setTitle("Open this First").setMessage("Picture will be blur until u watch add or buy subscription ")
-                .show()
+            lifecycleScope.launch {
+                viewModel.unlockImage(it.id)
+            }
+
 
 
 
@@ -64,6 +72,15 @@ class IntrudersFragment : Fragment() {
 
         lifecycleScope.launchWhenStarted {
             viewModel.images.collect { list ->
+                if (list.isEmpty()){
+                    binding.emptyLayout.visibility= View.VISIBLE
+
+                }
+                else{
+                    binding.emptyLayout.visibility= View.INVISIBLE
+
+
+                }
                 intruderImageAdapter.differ.submitList(list)
             }
         }
