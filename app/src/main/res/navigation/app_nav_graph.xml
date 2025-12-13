@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/languageSelectionFragment">
 
     <fragment
         android:id="@+id/alarmFragment"
@@ -41,6 +41,9 @@
             app:enterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_left"
             />
+        <action
+            android:id="@+id/action_homeFragment_to_languageSelectionFragment"
+            app:destination="@id/languageSelectionFragment" />
     </fragment>
     <fragment
         android:id="@+id/camouflageFragment"
@@ -93,4 +96,8 @@
         android:name="com.example.thirdeye.ui.widget.WidgetFragment"
         android:label="fragment_widget"
         tools:layout="@layout/fragment_widget" />
+    <fragment
+        android:id="@+id/languageSelectionFragment"
+        android:name="com.example.thirdeye.ui.onboarding.LanguageSelectionFragment"
+        android:label="LanguageSelectionFragment" />
 </navigation>

@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.data.models.IntrudersImages
-import com.example.thirdeye.helper.LockImagePrefs
+import com.example.thirdeye.data.localData.LockImagePrefs
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

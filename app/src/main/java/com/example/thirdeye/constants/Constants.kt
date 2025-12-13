@@ -10,14 +10,18 @@ object Constants {
 
 //sharedPreferences
 
-    const val PREF_NAME="AppLockPref"
+    const val PREF_NAME="pref"
     const val LOCK_KEY="isLocked"
 
-    const val INTRUSION_IMAGE_PREF="intrusion-prefs"
-
-    const val TOTAL_INTRUSIONS ="TOTAL_INTRUSION"
 
     const val UNLOCK_IMAGE_PREF="unlocked_images"
 
     const val UNLOCKED_SET="UNLOCKED_SET"
+
+
+
+    //App Languages Preferences
+
+    const val KEY_IS_FIRST_LAUNCH = "isFirstLaunch"
+    const val KEY_SELECTED_LANGUAGE = "selectedLanguage"
 }

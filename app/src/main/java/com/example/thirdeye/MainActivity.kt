@@ -17,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var deviceAdminManager: DeviceAdminManager
 
     private lateinit var binding: ActivityMainBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)

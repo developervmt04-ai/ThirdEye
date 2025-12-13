@@ -13,7 +13,10 @@ import com.example.thirdeye.R
 class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_ThirdEye)
         setContentView(R.layout.activity_splash)
 
         Handler(Looper.getMainLooper()).postDelayed({
