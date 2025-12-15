@@ -20,14 +20,18 @@ import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.notifications.Notifications
+import com.example.thirdeye.ui.widget.IntruderWidget
 import java.nio.ByteBuffer
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class CameraCaptureService : Service() {
 
     companion object {
         private const val NOTIF_ID = 1001
         var Instance: CameraCaptureService? = null
-        private const val TAG = "Camera2Service"
+
 
 
         fun start(context: Context) {
@@ -43,6 +47,8 @@ class CameraCaptureService : Service() {
     private var imageReader: ImageReader? = null
     private lateinit var bgThread: HandlerThread
     private lateinit var bgHandler: Handler
+
+    val imageTimestamps = mutableMapOf<String, Long>()
 
     private lateinit var repo: EncryptedStorageRepository
     private var appPendingIntent: PendingIntent? = null
@@ -64,10 +70,19 @@ class CameraCaptureService : Service() {
         imageReader!!.setOnImageAvailableListener({ reader ->
             val images = reader.acquireLatestImage() ?: return@setOnImageAvailableListener
             images.let {
-                val bytes=imageToByteArray(it)
-                repo.saveEncryptedImage(bytes)
-
+                val bytes = imageToByteArray(it)
                 showNotification()
+
+                val (file, timeStamp) = repo.saveEncryptedImage(bytes)
+
+                // Store timestamp in the map
+                imageTimestamps[file.name] = timeStamp
+
+                val dateTime = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())
+                    .format(Date(timeStamp))
+
+                IntruderWidget.updateWidgetDirect(this, "Intrusion Detected", "$dateTime")
+
                 it.close()
             }
         }, bgHandler)
@@ -110,12 +125,12 @@ class CameraCaptureService : Service() {
             listOf(imageReader!!.surface),
             object : CameraCaptureSession.StateCallback() {
                 override fun onConfigureFailed(session: CameraCaptureSession) {
-                    Log.e(TAG, "Capture session failed")
+
                 }
 
                 override fun onConfigured(session: CameraCaptureSession) {
                     captureSession = session
-                    Log.d(TAG, "CaptureSession READY ")
+
                 }
 
 

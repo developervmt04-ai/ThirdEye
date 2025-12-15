@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.navigation.safe.args)
+    alias(libs.plugins.hilt)
+
 
     id("kotlin-parcelize")
     id("kotlin-kapt")
@@ -56,6 +58,9 @@ dependencies {
     implementation(libs.navigation.fragment.ktx)
     implementation(libs.navigation.ui.ktx)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    kapt(libs.room.compiler)
 
     implementation("androidx.camera:camera-core:1.3.4")
     implementation("androidx.camera:camera-camera2:1.3.4")
@@ -80,5 +85,9 @@ dependencies {
     kapt("com.github.bumptech.glide:compiler:4.16.0")
     implementation("androidx.security:security-crypto:1.1.0-alpha06")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1")
+
+
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
 }

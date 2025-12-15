@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.thirdeye.R
 import com.example.thirdeye.data.models.IntrudersImages
 import com.example.thirdeye.databinding.IntruderImgItemBinding
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 class IntruderImageAdapter(): RecyclerView.Adapter<IntruderImageAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
@@ -18,27 +21,27 @@ class IntruderImageAdapter(): RecyclerView.Adapter<IntruderImageAdapter.ViewHold
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(
-        holder: ViewHolder,
-        position: Int
-    ) {
-       val items= differ.currentList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val items = differ.currentList[position]
+
+
+        val dateTime = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())
+            .format(Date(items.timeStamp))
+        holder.binding.dateTime.text = dateTime
 
         if (items.isLocked) {
-
             holder.binding.intruderImage.setImageResource(R.drawable.locked)
             holder.binding.root.setOnClickListener {
                 onLockedClick?.invoke(items)
             }
         } else {
-             holder.binding.intruderImage.setImageBitmap(items.bitmap)
+            holder.binding.intruderImage.setImageBitmap(items.bitmap)
             holder.binding.root.setOnClickListener {
                 onClick?.invoke(items)
             }
         }
-
-
     }
+
 
     override fun getItemCount(): Int {
         return differ.currentList.size

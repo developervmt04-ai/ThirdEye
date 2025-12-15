@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.thirdeye.MainActivity
 import com.example.thirdeye.R
@@ -15,12 +17,17 @@ import com.example.thirdeye.ui.dialogs.AddWidgetDialog
 import com.example.thirdeye.ui.dialogs.AudibleDialog
 import com.example.thirdeye.ui.dialogs.FingerPrintDialog
 import com.example.thirdeye.ui.dialogs.permissionsDialog.PermissionDialog
+import com.example.thirdeye.ui.intruders.IntruderPhotosViewModel
+import kotlinx.coroutines.launch
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var audioDialog: AudibleDialog
     private lateinit var addWidgetDialog: AddWidgetDialog
+
+    private lateinit var homeAdapter: HomePagerAdapter
+    val viewModel: IntruderPhotosViewModel by activityViewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +45,32 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        homeAdapter = HomePagerAdapter()
+        binding.homePager.adapter = homeAdapter
+
+
+
+
+        viewModel.loadImages()
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.images.collect {
+
+                homeAdapter.differ.submitList(it)
+
+
+            }
+
+
+        }
+
+        homeAdapter.onLockedClick={
+            lifecycleScope.launch {
+                viewModel.unlockImage(it.id)
+            }
+
+
+
+        }
 
 
         var isOn: Boolean = false
@@ -82,9 +115,10 @@ class HomeFragment : Fragment() {
 
         }
         binding.addWidgetBtn.setOnClickListener {
-            addWidgetDialog= AddWidgetDialog(requireContext())
+            addWidgetDialog = AddWidgetDialog(requireContext())
             addWidgetDialog.setTitle(getString(R.string.addTitle))
-                .setDescription(getString(R.string.add_widget)).onClick { it
+                .setDescription(getString(R.string.add_widget)).onClick {
+                    it
                     findNavController().navigate(R.id.action_homeFragment_to_widgetFragment)
 
                 }.show()

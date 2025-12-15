@@ -5,6 +5,7 @@ import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKey
 import com.example.thirdeye.constants.Constants.dirName
 import com.google.common.primitives.Bytes
+import kotlinx.serialization.builtins.PairSerializer
 import java.io.File
 
 class EncryptedStorageRepository(private val context: Context) {
@@ -21,11 +22,12 @@ class EncryptedStorageRepository(private val context: Context) {
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
             .build()
     }
-     fun saveEncryptedImage(bytes: ByteArray): File{
+     fun saveEncryptedImage(bytes: ByteArray): Pair<File, Long>{
+         val timeStamp= System.currentTimeMillis()
 
 
         val dir=getOrCreateDir()
-        val file= File(dir,"intruder_${System.currentTimeMillis()}.jpg")
+        val file= File(dir,"intruder_${timeStamp}.jpg")
         val masterKey=createMasterKey()
 
         val encryptedFile= EncryptedFile.Builder(
@@ -40,10 +42,10 @@ class EncryptedStorageRepository(private val context: Context) {
             output.write(bytes)
         }
 
-        return file
+        return Pair(file,timeStamp)
 
     }
-     fun readEncryptedImage(file: File): ByteArray{
+     fun readEncryptedImage(file: File,savedTime:Long): Pair<ByteArray,Long>{
 
         val masterKey=createMasterKey()
         val encryptedFile= EncryptedFile.Builder(
@@ -54,9 +56,8 @@ class EncryptedStorageRepository(private val context: Context) {
             EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
 
         ).build()
-        return encryptedFile.openFileInput().use {
-            it.readBytes()
-        }
+         val bytes=encryptedFile.openFileInput().use { it.readBytes() }
+        return Pair(bytes,savedTime)
     }
     fun listOfImages(): List<File> {
         val dir = getOrCreateDir()

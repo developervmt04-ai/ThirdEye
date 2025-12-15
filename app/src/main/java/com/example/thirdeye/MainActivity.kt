@@ -11,7 +11,10 @@ import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.example.thirdeye.databinding.ActivityMainBinding
 import com.example.thirdeye.permissions.DeviceAdminManager
 import com.example.thirdeye.permissions.Permissions
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     lateinit var permissions: Permissions
     private lateinit var deviceAdminManager: DeviceAdminManager

@@ -18,6 +18,9 @@ object Constants {
 
     const val UNLOCKED_SET="UNLOCKED_SET"
 
+    const val MANUAL_UNLOCK_SET = "manual_unlock_set"
+
+
 
 
     //App Languages Preferences

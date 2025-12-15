@@ -16,9 +16,10 @@ import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.data.models.IntrudersImages
 import com.example.thirdeye.databinding.FragmentIntrudersBinding
 import com.example.thirdeye.ui.dialogs.FingerPrintDialog
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-
+@AndroidEntryPoint
 class IntrudersFragment : Fragment() {
     private lateinit var binding: FragmentIntrudersBinding
     private lateinit var intruderImageAdapter: IntruderImageAdapter
