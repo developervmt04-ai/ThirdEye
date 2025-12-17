@@ -218,6 +218,9 @@
 
                 android:orientation="vertical">
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/selfieAttempt"
+                    android:clickable="true"
+                    android:focusable="true"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:cardCornerRadius="12dp"
@@ -256,6 +259,7 @@
                                 android:text="@string/intruder_selfie"/>
 
                             <TextView
+                                android:id="@+id/selfieDescription"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 style="@style/DescriptionText"

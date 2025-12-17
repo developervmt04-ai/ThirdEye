@@ -91,12 +91,8 @@ class LanguageSelectionFragment : Fragment() {
     }
 
     private fun handleSelection(radioButton: RadioButton, languageData: LanguageData) {
-
         selectedRadioButton?.isChecked = false
-
-        // Check the new one
         radioButton.isChecked = true
-
         selectedLanguage = languageData
         Log.d("Language","$selectedLanguage")
         selectedRadioButton = radioButton

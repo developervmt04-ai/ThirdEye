@@ -9,7 +9,7 @@ import androidx.core.content.edit
 import androidx.fragment.app.FragmentActivity
 import com.example.thirdeye.R
 import com.example.thirdeye.constants.Constants.LOCK_KEY
-import com.example.thirdeye.helper.BiometricPrefs
+import com.example.thirdeye.data.localData.BiometricPrefs
 
 class BiometricHelper(private val activity: FragmentActivity) {
 

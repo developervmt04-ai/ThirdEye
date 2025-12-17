@@ -4,6 +4,7 @@ import android.app.admin.DeviceAdminReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.UserHandle
+import com.example.thirdeye.data.localData.IntruderSelfiePrefs
 import com.example.thirdeye.service.CameraCaptureService
 
 class MyDeviceAdminReceiver: DeviceAdminReceiver() {
@@ -18,7 +19,26 @@ class MyDeviceAdminReceiver: DeviceAdminReceiver() {
 
     override fun onPasswordFailed(context: Context, intent: Intent) {
         super.onPasswordFailed(context, intent)
-        CameraCaptureService.Instance?.captureIntruderPhoto()
+
+        val selfiePrefs= IntruderSelfiePrefs(context)
+
+       val current=selfiePrefs.incrementAttempt()
+
+        val threshold=selfiePrefs.getWrongAttempts()
+
+        if (current>=threshold){
+            try {
+                CameraCaptureService.Instance?.captureIntruderPhoto()
+
+            }
+            catch (e: Exception){
+                e.printStackTrace()
+            }
+
+
+
+        }
+
 
 
     }
@@ -26,5 +46,6 @@ class MyDeviceAdminReceiver: DeviceAdminReceiver() {
 
     override fun onPasswordSucceeded(context: Context, intent: Intent, user: UserHandle) {
         super.onPasswordSucceeded(context, intent, user)
+        IntruderSelfiePrefs(context).resetAttempts()
     }
 }

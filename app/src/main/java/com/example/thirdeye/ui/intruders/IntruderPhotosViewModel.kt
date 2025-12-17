@@ -30,21 +30,33 @@ class IntruderPhotosViewModel @Inject constructor(
 
     fun loadImages() {
         viewModelScope.launch(Dispatchers.IO) {
+
             val files = repo.listOfImages().sortedByDescending { it.lastModified() }
 
+
+            if (files.size >3) {
+                val fourthImage = files[3]
+                if (!lockedPref.isLocked(fourthImage.name) &&
+                    !lockedPref.isManuallyUnlocked(fourthImage.name)
+                ) {
+                    lockedPref.addLocked(fourthImage.name)
+                }
+            }
+
+
             val imageList = files.map { file ->
-                // 1️⃣ Get saved timestamp from Room metadata
+
                 val metaFromDb = intruderRepo.getMeta(file.name)
                 val savedTime = metaFromDb?.timeStamp ?: file.lastModified()
 
-                // 2️⃣ Read encrypted image
+
                 val (bytes, timeStamp) = repo.readEncryptedImage(file, savedTime)
                 val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
 
-                // 3️⃣ Check lock state
+
                 val isLocked = lockedPref.isLocked(file.name)
 
-                // 4️⃣ Save/Update metadata in Room
+
                 val metadata = IntruderImageMetaData(id = file.name, timeStamp = timeStamp)
                 intruderRepo.addImageData(metadata)
 
@@ -58,16 +70,18 @@ class IntruderPhotosViewModel @Inject constructor(
                 )
             }
 
+
             _images.value = imageList
         }
     }
 
+
     fun deleteImage(file: File) {
         viewModelScope.launch(Dispatchers.IO) {
-            // Delete encrypted image from storage
+
             repo.deleteImage(file)
 
-            // Remove lock state
+
             if (lockedPref.isLocked(file.name)) {
                 lockedPref.removeLocked(file.name)
             }
@@ -82,11 +96,11 @@ class IntruderPhotosViewModel @Inject constructor(
 
     fun unlockImage(id: String) {
         viewModelScope.launch {
-            // Remove lock state
+
             lockedPref.removeLocked(id)
             lockedPref.addManualUnlock(id)
 
-            // Update UI instantly
+
             _images.update { list ->
                 list.map { if (it.id == id) it.copy(isLocked = false) else it }
             }

@@ -5,9 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.thirdeye.biometrics.BiometricHelper
 import com.example.thirdeye.databinding.FragmentSettingBinding
-import com.example.thirdeye.helper.BiometricPrefs
+import com.example.thirdeye.data.localData.BiometricPrefs
+import com.example.thirdeye.data.localData.IntruderSelfiePrefs
+import com.example.thirdeye.ui.dialogs.AttemptsDialog
 
 
 class SettingFragment : Fragment() {
@@ -35,6 +38,7 @@ class SettingFragment : Fragment() {
         val biometricPref= BiometricPrefs(requireContext())
 
         val biometricHelper = BiometricHelper(requireActivity())
+        val selfiePrefs= IntruderSelfiePrefs(requireContext())
 
 
 
@@ -63,6 +67,26 @@ class SettingFragment : Fragment() {
 
 
         }
+        binding.selfieAttempt.setOnClickListener {
+            AttemptsDialog.showAttemptsDialog(requireContext()){
+                selectNumber->
+                selfiePrefs.setWrongTries(selectNumber)
+                val tires=selfiePrefs.getWrongAttempts()
+                binding.selfieDescription.text="Selfie will be taken after $tires wrong tries"
+
+
+
+
+
+            }
+
+
+
+
+
+
+        }
+
 
 
 

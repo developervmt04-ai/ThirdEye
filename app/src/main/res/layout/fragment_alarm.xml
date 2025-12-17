@@ -102,7 +102,7 @@
 
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/bioMetricSwitch"
+                    android:id="@+id/alarmSwitch"
                     app:thumbTint="@color/white"
 
                     android:layout_width="wrap_content"
@@ -140,6 +140,7 @@
 
         <!-- Card Background for Fingerprint Lock -->
         <androidx.cardview.widget.CardView
+            android:id="@+id/selectRingtone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardCornerRadius="12dp"
@@ -175,6 +176,7 @@
                         android:text="@string/select_alarm"/>
 
                     <TextView
+                        android:id="@+id/ringTonename"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/DescriptionText"

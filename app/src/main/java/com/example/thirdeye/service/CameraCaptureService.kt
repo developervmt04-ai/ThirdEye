@@ -11,15 +11,20 @@ import android.hardware.camera2.CameraCharacteristics
 import android.hardware.camera2.CameraDevice
 import android.hardware.camera2.CameraManager
 import android.hardware.camera2.CaptureRequest
+import android.media.AudioAttributes
 import android.media.Image
 import android.media.ImageReader
+import android.media.Ringtone
+import android.media.RingtoneManager
 import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
 import androidx.core.content.ContextCompat
 import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
+import com.example.thirdeye.data.localData.RingtonePrefs
 import com.example.thirdeye.notifications.Notifications
+import com.example.thirdeye.ui.alarm.AlarmPlayer
 import com.example.thirdeye.ui.widget.IntruderWidget
 import java.nio.ByteBuffer
 import java.text.SimpleDateFormat
@@ -47,6 +52,9 @@ class CameraCaptureService : Service() {
     private var imageReader: ImageReader? = null
     private lateinit var bgThread: HandlerThread
     private lateinit var bgHandler: Handler
+    private lateinit var player: AlarmPlayer
+
+
 
     val imageTimestamps = mutableMapOf<String, Long>()
 
@@ -56,6 +64,8 @@ class CameraCaptureService : Service() {
     override fun onCreate() {
         super.onCreate()
         Instance = this
+        player= AlarmPlayer(this)
+
         repo= EncryptedStorageRepository(applicationContext)
         Notifications.createChannels(this)
         startForeground(NOTIF_ID, Notifications.persistentNotification(this))
@@ -75,7 +85,7 @@ class CameraCaptureService : Service() {
 
                 val (file, timeStamp) = repo.saveEncryptedImage(bytes)
 
-                // Store timestamp in the map
+
                 imageTimestamps[file.name] = timeStamp
 
                 val dateTime = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())
@@ -83,12 +93,24 @@ class CameraCaptureService : Service() {
 
                 IntruderWidget.updateWidgetDirect(this, "Intrusion Detected", "$dateTime")
 
+                playIntrusionAlarm()
                 it.close()
             }
         }, bgHandler)
         openCamera()
 
 
+    }
+
+    fun playIntrusionAlarm() {
+        val pref = RingtonePrefs(this)
+        if (!pref.isAlarmEnabled()) return
+
+        val uri = pref.getAlarmTone()
+        player.play(uri)
+    }
+    fun stopAlarm() {
+        player.stop()
     }
 
     private fun openCamera() {
@@ -181,6 +203,8 @@ class CameraCaptureService : Service() {
 
 
     }
+
+
 
     override fun onDestroy() {
         super.onDestroy()

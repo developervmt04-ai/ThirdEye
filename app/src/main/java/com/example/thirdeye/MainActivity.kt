@@ -11,6 +11,7 @@ import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.example.thirdeye.databinding.ActivityMainBinding
 import com.example.thirdeye.permissions.DeviceAdminManager
 import com.example.thirdeye.permissions.Permissions
+import com.example.thirdeye.service.CameraCaptureService
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
         deviceAdminManager= DeviceAdminManager(this)
          permissions= Permissions(this)
         permissions.checkAndRequest()
@@ -35,6 +38,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         permissions.checkAndRequest()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CameraCaptureService.Instance?.stopAlarm()
+
     }
 
 
