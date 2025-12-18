@@ -4,20 +4,116 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:background="@color/appBgColor"
+    android:fitsSystemWindows="true"
     android:layout_height="match_parent">
+    <androidx.cardview.widget.CardView
+        android:visibility="gone"
+        android:id="@+id/lokcedCard"
+        android:layout_width="match_parent"
+        app:cardCornerRadius="12dp"
+
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/lockedImage"
+            android:scaleType="centerCrop"
+            android:layout_width="match_parent"
+            android:src="@drawable/blurbg"
+            android:layout_height="match_parent"/>
+
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:showDividers="middle"
+                android:divider="@drawable/vertical_spacing"> <!-- custom drawable -->
+                >
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/lockicon" />
+
+                <TextView
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lockeImg" />
+
+                <Button
+                    android:id="@+id/watchAdBtn"
+                    android:text="Watch Ad to Unlock"
+                    android:drawableLeft="@drawable/videoicon"
+                    android:drawablePadding="8dp"
+                    style="@style/transparentButton" />
+
+                <Button
+                    android:id="@+id/premiumBtn"
+                    android:text="Unlock Now"
+                    android:drawableLeft="@drawable/premiumicon"
+                    android:drawablePadding="8dp"
+                    style="@style/premiumButton" />
+
+            </LinearLayout>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
 
     <androidx.cardview.widget.CardView
+
+        android:id="@+id/unlockedCard"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardCornerRadius="12dp">
 
         <ImageView
 
-            android:id="@+id/homeImg"
+            android:id="@+id/homeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
             android:src="@drawable/blurbg" />
+        <RelativeLayout
+            android:padding="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+                <TextView
+                    android:layout_above="@id/date"
+                    android:id="@+id/detail"
+                    android:layout_alignParentLeft="true"
+                    style="@style/BoldText"
+                    android:text="Details" />
+            <TextView
+                android:layout_above="@id/time"
+                android:id="@+id/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Date"/>
+            <TextView
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentBottom="true"
+                android:id="@+id/time"
+                android:textColor="@color/white"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="time"/>
+
+
+
+
+
+        </RelativeLayout>
 
     </androidx.cardview.widget.CardView>
 

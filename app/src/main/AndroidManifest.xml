@@ -119,9 +119,11 @@
 
 
         <receiver android:name=".ui.widget.IntruderWidget"
-            android:exported="true"
+            android:exported="true">
 
-            >
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/intruder_widget_info"/>
 
@@ -147,6 +149,16 @@
             android:name=".service.CameraCaptureService"
             android:exported="true"
             android:foregroundServiceType="camera" />
+        <provider
+            android:authorities="${applicationId}.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths"/>
+
+        </provider>
     </application>
 
 </manifest>

@@ -181,28 +181,22 @@ class CameraCaptureService : Service() {
     fun captureIntruderPhoto() {
         cameraDevice ?: return
         captureSession ?: return
-        imageReader!!.surface
-
-        val request =
-            cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE).apply {
-                this!!.addTarget(imageReader!!.surface)
-                set(
-                    CaptureRequest.CONTROL_AF_MODE,
-                    CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE
-                )
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-                    set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                    set(CaptureRequest.FLASH_MODE, CaptureRequest.FLASH_MODE_OFF)
 
 
-                }
-            }
-        if (request != null) {
-            captureSession?.capture(request.build(), null, bgHandler)
-        }
+        bgHandler.postDelayed({
+            val request = cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)?.apply {
+                addTarget(imageReader!!.surface)
+                set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+                set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+                set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+                set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_FAST)
+            }?.build()
 
+            request?.let { captureSession?.capture(it, null, bgHandler) }
 
+        }, 200)
     }
+
 
 
 

@@ -61,7 +61,7 @@ class BiometricHelper(private val activity: FragmentActivity) {
                 override fun onAuthenticationFailed() {
                     super.onAuthenticationFailed()
                     Toast.makeText(activity, R.string.bioMetricError, Toast.LENGTH_SHORT).show()
-                    activity.finishAffinity()
+                    activity.finish()
                 }
 
                 override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
@@ -75,6 +75,7 @@ class BiometricHelper(private val activity: FragmentActivity) {
             .setTitle(activity.getString(R.string.unlock_app))
             .setSubtitle(activity.getString(R.string.biometricDescription))
             .setNegativeButtonText("Cancel")
+
             .build()
         bmP.authenticate(pi)
 

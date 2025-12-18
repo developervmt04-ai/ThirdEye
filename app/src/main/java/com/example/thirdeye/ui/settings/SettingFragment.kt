@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.fragment.findNavController
 import com.example.thirdeye.biometrics.BiometricHelper
 import com.example.thirdeye.databinding.FragmentSettingBinding
 import com.example.thirdeye.data.localData.BiometricPrefs
@@ -34,6 +35,11 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.backIcon.setOnClickListener {
+
+            findNavController().navigateUp()
+        }
 
         val biometricPref= BiometricPrefs(requireContext())
 

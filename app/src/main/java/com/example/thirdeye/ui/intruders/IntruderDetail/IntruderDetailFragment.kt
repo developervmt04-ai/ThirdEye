@@ -9,10 +9,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentIntruderDetailBinding
+import com.example.thirdeye.ui.dialogs.DeleteDialog
 import com.example.thirdeye.ui.intruders.IntruderPhotosViewModel
+import com.example.thirdeye.utils.ShareHelper
 import kotlinx.coroutines.launch
 
 
@@ -44,25 +45,35 @@ class IntruderDetailFragment : Fragment() {
         binding.deleteIcon.setOnClickListener {
             lifecycleScope.launch {
 
-                intruderData?.file?.let {file->
-                    viewModel.deleteImage(file)
-                    requireActivity().onBackPressed()
+                intruderData?.file?.let { file ->
+                    DeleteDialog.showDeleteDialog(requireContext(), onYes = {
+                        viewModel.deleteImage(file)
+                        requireActivity().onBackPressed()
+                    })
+
                 }
 
             }
-            binding.historyIcon.setOnClickListener {
-               findNavController().navigate(R.id.action_intruderDetailFragment_to_historyFragment)
 
-
-
-            }
-
-
-
+        }
+        binding.historyIcon.setOnClickListener {
+            findNavController().navigate(R.id.action_intruderDetailFragment_to_historyFragment)
 
 
 
         }
+        binding.shareIcon.setOnClickListener {
+            intruderData?.bitmap?.let { bitmap ->
+                ShareHelper.shareFile(
+                    context = requireContext(),
+                    bitmap = bitmap,
+                    mimeType = "image/*",
+                    chooserTitle = "Share via"
+                )
+            }
+        }
+
+
 
 
 

@@ -1,11 +1,10 @@
-package com.example.thirdeye
+package com.example.thirdeye.di
 
 import android.content.Context
 import androidx.room.Room
 import com.example.thirdeye.data.localData.LockImagePrefs
 import com.example.thirdeye.data.localData.db.IntruderDB
 import com.example.thirdeye.data.localData.db.IntruderDao
-import com.example.thirdeye.data.models.IntrudersImages
 import com.example.thirdeye.ui.intruders.IntruderRepo
 import dagger.Module
 import dagger.Provides
@@ -32,17 +31,17 @@ object AppModule {
         ).build()
     @Provides
 
-    fun provideIntruderDao(db: IntruderDB): IntruderDao=db.intruderDao()
+    fun provideIntruderDao(db: IntruderDB): IntruderDao =db.intruderDao()
     @Provides
     @Singleton
 
-    fun provideIntruderRepo(dao: IntruderDao): IntruderRepo= IntruderRepo(dao)
+    fun provideIntruderRepo(dao: IntruderDao): IntruderRepo = IntruderRepo(dao)
 
     @Provides
     @Singleton
     fun providesLockImagePrefs(
         @ApplicationContext app: Context
-    ): LockImagePrefs= LockImagePrefs(app)
+    ): LockImagePrefs = LockImagePrefs(app)
 
 
 

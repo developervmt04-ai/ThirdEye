@@ -1,36 +1,60 @@
 package com.example.thirdeye.ui.dialogs
 
-import android.app.AlertDialog
 import android.content.Context
+import android.view.LayoutInflater
+import android.widget.ImageView
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import androidx.appcompat.app.AlertDialog
+import com.example.thirdeye.R
 import com.example.thirdeye.data.localData.IntruderSelfiePrefs
 
 object AttemptsDialog {
 
     fun showAttemptsDialog(context: Context, onSelect: (Int) -> Unit) {
+
         val prefs = IntruderSelfiePrefs(context)
-        val options = arrayOf("1", "2", "3", "4")
-
-
         val savedAttempts = prefs.getWrongAttempts()
 
+        val view = LayoutInflater.from(context).inflate(R.layout.attempts_dialog, null)
+        val radioGroup = view.findViewById<RadioGroup>(R.id.attemptsRadioGroup)
+        val imageView= view.findViewById<ImageView>(R.id.backBtn)
 
-        var selectedIndex = options.indexOf(savedAttempts.toString())
-        if (selectedIndex == -1) selectedIndex = 0
 
-        AlertDialog.Builder(context)
-            .setTitle("Select number of attempts after which selfie will be taken")
-            .setSingleChoiceItems(options, selectedIndex) { _, which ->
-                selectedIndex = which
+
+        val options = listOf(1, 2, 3, 4)
+        options.forEach { number ->
+            val radioButton = RadioButton(context).apply {
+                text = "  $number Wrong Attempts"
+                id = number
+                isChecked = number == savedAttempts
+                setTextColor(context.getColor(R.color.black))
+                buttonTintList = android.content.res.ColorStateList.valueOf(android.graphics.Color.BLACK)
+
             }
-            .setPositiveButton("OK") { dialog, _ ->
-                val selectedItem = options[selectedIndex].toInt()
-                prefs.setWrongTries(selectedItem) // save selection
-                onSelect(selectedItem)
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+
+            radioGroup.addView(radioButton)
+        }
+
+        val dialog = AlertDialog.Builder(context)
+            .setView(view)
+            .setCancelable(true)
+            .create()
+
+
+
+        radioGroup.setOnCheckedChangeListener { group, checkedId ->
+            prefs.setWrongTries(checkedId)
+            onSelect(checkedId)
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        imageView.setOnClickListener {
+            dialog.dismiss()
+
+
+        }
     }
+
 }

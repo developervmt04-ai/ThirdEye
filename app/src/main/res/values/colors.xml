@@ -6,5 +6,9 @@
     <color name="buttonColor">#1a2744</color>
     <color name="dividerColor">#00D0FF</color>
     <color name="cardBgColor">#1e3a52</color>
+    <color name="transparent">#00FFFFFF </color>
+    <color name="premiumColor">#FFC999 </color>
+    <color name="red">#FF0000</color>
+
 
 </resources>

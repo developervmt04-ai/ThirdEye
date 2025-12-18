@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -55,6 +56,17 @@ class HomeFragment : Fragment() {
         viewModel.loadImages()
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.images.collect {
+                if (it.isEmpty()){
+
+                    binding.emptyIntruders.visibility=View.VISIBLE
+                    binding.homePager.visibility=View.INVISIBLE
+                }
+                else{
+
+
+                    binding.emptyIntruders.visibility=View.INVISIBLE
+                    binding.homePager.visibility=View.VISIBLE
+                }
 
                 homeAdapter.differ.submitList(it)
 
@@ -69,7 +81,13 @@ class HomeFragment : Fragment() {
                 viewModel.unlockImage(it.id)
             }
 
+        }
+        homeAdapter.onWatchAdClicked={
+            Toast.makeText(requireContext(),"Clicked on Watch Ad Button", Toast.LENGTH_SHORT).show()
 
+        }
+        homeAdapter.onPremiumClicked={
+            Toast.makeText(requireContext(),"Premium Clicked", Toast.LENGTH_SHORT).show()
 
         }
 

@@ -25,9 +25,7 @@ class IntruderImageAdapter(): RecyclerView.Adapter<IntruderImageAdapter.ViewHold
         val items = differ.currentList[position]
 
 
-        val dateTime = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())
-            .format(Date(items.timeStamp))
-        holder.binding.dateTime.text = dateTime
+
 
         if (items.isLocked) {
             holder.binding.intruderImage.setImageResource(R.drawable.locked)

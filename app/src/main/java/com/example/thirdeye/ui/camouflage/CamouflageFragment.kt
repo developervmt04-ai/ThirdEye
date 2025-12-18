@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.thirdeye.R
 import com.example.thirdeye.constants.Constants.CALCULATOR_ICON
@@ -37,6 +38,12 @@ class CamouflageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        binding.backIcon.setOnClickListener {
+            findNavController().navigateUp()
+
+        }
         val icons=listOf(
             AppIcons(R.mipmap.ic_launcher,DEFAULT_ICON,"Default Icon"),
             AppIcons(R.drawable.weathericon,WEATHER_ICON,"Weather Icon"),

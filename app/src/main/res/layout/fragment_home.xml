@@ -79,27 +79,58 @@
             android:id="@+id/imageContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:visibility="gone"
+                android:id="@+id/emptyIntruders"
+                android:layout_width="match_parent"
+                app:cardCornerRadius="12dp"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/emptyImage"
+                    android:scaleType="centerCrop"
+                    android:layout_width="match_parent"
+                    android:src="@drawable/blurbg"
+                    android:layout_height="match_parent"/>
+
+                <RelativeLayout
+                    android:padding="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <LinearLayout
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:showDividers="middle"
+                        android:divider="@drawable/vertical_spacing">
+                        >
+                        <ImageView
+                            android:id="@+id/imgEmpty"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/emptyicon" />
+
+                        <TextView
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/emptyIntruders" />
+
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/homePager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 />
 
-
-
-
-
-
-
-
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="16dp"
-                android:src="@drawable/prmium_icon" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
