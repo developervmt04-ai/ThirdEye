@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
 import com.example.thirdeye.databinding.GeneralDialogBinding
+import com.example.thirdeye.ui.widget.AddWidget
 
 class AddWidgetDialog (context: Context){
 
@@ -12,6 +13,7 @@ class AddWidgetDialog (context: Context){
     init {
         dialog.setContentView(binding.root)
         dialog.setCancelable(true)
+
 
         binding.closeButton.setOnClickListener {
             dialog.dismiss()

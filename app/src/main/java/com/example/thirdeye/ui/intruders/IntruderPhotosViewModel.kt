@@ -3,11 +3,14 @@ package com.example.thirdeye.ui.intruders
 import android.app.Application
 import android.graphics.BitmapFactory
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.application
 import androidx.lifecycle.viewModelScope
 import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.data.models.IntrudersImages
 import com.example.thirdeye.data.localData.LockImagePrefs
 import com.example.thirdeye.data.models.IntruderImageMetaData
+import com.example.thirdeye.ui.widget.IntruderWidget
+import com.example.thirdeye.ui.widget.widgetImage.saveWidgetBitmap
 import dagger.hilt.android.lifecycle.HiltViewModel
 import jakarta.inject.Inject
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +38,7 @@ class IntruderPhotosViewModel @Inject constructor(
 
 
             if (files.size >3) {
-                val fourthImage = files[3]
+                val fourthImage = files[0]
                 if (!lockedPref.isLocked(fourthImage.name) &&
                     !lockedPref.isManuallyUnlocked(fourthImage.name)
                 ) {
@@ -69,6 +72,18 @@ class IntruderPhotosViewModel @Inject constructor(
                     timeStamp = timeStamp
                 )
             }
+            val latestImage = imageList.maxByOrNull { it.timeStamp }
+
+            latestImage?.let { image ->
+
+                saveWidgetBitmap(application, image.bitmap)
+                IntruderWidget.updateWidgetDirect(
+                    context = application,
+                    state = if (image.isLocked) "Locked" else "Intrusion Detected",
+                    dataTime = formatTime(image.timeStamp)
+                )
+            }
+
 
 
             _images.value = imageList
@@ -105,5 +120,9 @@ class IntruderPhotosViewModel @Inject constructor(
                 list.map { if (it.id == id) it.copy(isLocked = false) else it }
             }
         }
+    }
+    private fun formatTime(timestamp: Long): String {
+        val sdf = java.text.SimpleDateFormat("HH:mm dd/MM/yyyy", java.util.Locale.getDefault())
+        return sdf.format(java.util.Date(timestamp))
     }
 }

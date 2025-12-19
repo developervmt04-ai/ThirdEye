@@ -159,7 +159,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/add_widget_icon"
-                android:tint="#FFFFFF" />
+                app:tint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -236,7 +236,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/alram_icon"
-                android:tint="#FFFFFF" />
+                app:tint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -278,7 +278,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/emptyicon"
-            android:tint="#d4a574" />
+            app:tint="#d4a574" />
 
         <TextView
             android:layout_width="wrap_content"

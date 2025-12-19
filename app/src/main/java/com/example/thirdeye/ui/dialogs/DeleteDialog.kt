@@ -21,12 +21,9 @@ object DeleteDialog {
         val dialog= AlertDialog.Builder(context).setView(view).setCancelable(true).create()
 
         cancelBtn.setOnClickListener {dialog.dismiss() }
-        deleteBtn.setOnClickListener { onYes.invoke() }
+        deleteBtn.setOnClickListener { onYes.invoke()
+        dialog.dismiss()}
         dialog.show()
-
-
-
-
 
 
 

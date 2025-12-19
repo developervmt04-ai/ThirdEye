@@ -19,6 +19,7 @@ import com.example.thirdeye.ui.dialogs.AudibleDialog
 import com.example.thirdeye.ui.dialogs.FingerPrintDialog
 import com.example.thirdeye.ui.dialogs.permissionsDialog.PermissionDialog
 import com.example.thirdeye.ui.intruders.IntruderPhotosViewModel
+import com.example.thirdeye.ui.widget.AddWidget
 import kotlinx.coroutines.launch
 
 
@@ -137,8 +138,7 @@ class HomeFragment : Fragment() {
             addWidgetDialog = AddWidgetDialog(requireContext())
             addWidgetDialog.setTitle(getString(R.string.addTitle))
                 .setDescription(getString(R.string.add_widget)).onClick {
-                    it
-                    findNavController().navigate(R.id.action_homeFragment_to_widgetFragment)
+                    AddWidget.addWidget(requireContext())
 
                 }.show()
 

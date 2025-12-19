@@ -2,20 +2,19 @@ package com.example.thirdeye.permissions
 
 import android.content.pm.PackageManager
 import android.os.Build
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.thirdeye.ui.dialogs.permissionsDialog.PermissionDialog
 
-class Permissions(private val activity: AppCompatActivity) {
+class Permissions(private val activity: AppCompatActivity, private val deviceAdminManager: DeviceAdminManager) {
 
-    val requiredPermissions = buildList {
+    private val requiredPermissions = buildList {
+        add(android.Manifest.permission.CAMERA)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             add(android.Manifest.permission.POST_NOTIFICATIONS)
             add(android.Manifest.permission.READ_MEDIA_IMAGES)
         } else {
-            add(android.Manifest.permission.CAMERA)
             add(android.Manifest.permission.READ_EXTERNAL_STORAGE)
             add(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
@@ -27,28 +26,30 @@ class Permissions(private val activity: AppCompatActivity) {
 
         }
 
-
     fun checkAndRequest() {
+
         val notGranted = requiredPermissions.filter {
             ContextCompat.checkSelfPermission(activity, it) != PackageManager.PERMISSION_GRANTED
+        }.toMutableList()
+
+        if (!deviceAdminManager.isDeviceAdminActive()) {
+            notGranted.add("DEVICE_ADMIN")
         }
 
-        if (notGranted.isNotEmpty()) {
+        if (notGranted.isEmpty()) return
 
-            PermissionDialog(
-                pendingPermissions = notGranted,
-                onRequest = { perm ->
-                    requestSinglePermission(perm)
-                }
-            ).show(activity.supportFragmentManager, "perm_dialog")
-        }
+        val permissionDialog = PermissionDialog(
+            pendingPermissions = notGranted,
+            dm = deviceAdminManager,
+            onRequest = { perm -> requestSinglePermission(perm) }
+        )
+
+        permissionDialog.show(activity.supportFragmentManager, "perm_dialog")
     }
+
+
 
     fun requestSinglePermission(permission: String) {
         singlePermissionLauncher.launch(permission)
     }
-
-
 }
-
-

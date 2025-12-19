@@ -29,15 +29,10 @@ class MainActivity : AppCompatActivity() {
 
 
         deviceAdminManager= DeviceAdminManager(this)
-         permissions= Permissions(this)
+         permissions= Permissions(this,deviceAdminManager)
         permissions.checkAndRequest()
 
-        if (!deviceAdminManager.isDeviceAdminActive()){
 
-            deviceAdminManager.requestDeviceAdmin()
-        }
-
-        permissions.checkAndRequest()
     }
 
     override fun onResume() {

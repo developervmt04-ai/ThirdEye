@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 import com.example.thirdeye.biometrics.BiometricHelper
 import com.example.thirdeye.databinding.FragmentSettingBinding
@@ -16,19 +15,12 @@ import com.example.thirdeye.ui.dialogs.AttemptsDialog
 
 class SettingFragment : Fragment() {
     private lateinit var binding: FragmentSettingBinding
-    private var isChanged = false
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding= FragmentSettingBinding.inflate(layoutInflater,container,false)
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentSettingBinding.inflate(layoutInflater, container, false)
 
         return binding.root
     }
@@ -41,62 +33,36 @@ class SettingFragment : Fragment() {
             findNavController().navigateUp()
         }
 
-        val biometricPref= BiometricPrefs(requireContext())
+        val biometricPref = BiometricPrefs(requireContext())
 
         val biometricHelper = BiometricHelper(requireActivity())
-        val selfiePrefs= IntruderSelfiePrefs(requireContext())
+        val selfiePrefs = IntruderSelfiePrefs(requireContext())
 
+        var isUpdatingSwitch = false
+        binding.bioMetricSwitch.isChecked = biometricPref.isBiometricEnabled()
 
+        binding.bioMetricSwitch.setOnCheckedChangeListener { _, isChecked ->
+            if (isUpdatingSwitch) return@setOnCheckedChangeListener
+            isUpdatingSwitch = true
 
-
-
-
-
-        isChanged = true
-        binding.bioMetricSwitch.isChecked =biometricPref.isBiometricEnabled()
-        isChanged = false
-
-        binding.bioMetricSwitch.setOnCheckedChangeListener {_, isChecked ->
-
-            if (isChanged) return@setOnCheckedChangeListener
-            isChanged = true
-
-            biometricHelper.toggleAppLock(isChecked,biometricPref,{switchState->
-                isChanged = true
+            biometricHelper.toggleAppLock(isChecked, biometricPref) { switchState ->
                 binding.bioMetricSwitch.isChecked = switchState
-                isChanged = false
-
-
-
-            })
-
-
-
+                isUpdatingSwitch = false
+            }
         }
+
+
         binding.selfieAttempt.setOnClickListener {
-            AttemptsDialog.showAttemptsDialog(requireContext()){
-                selectNumber->
+            AttemptsDialog.showAttemptsDialog(requireContext()) { selectNumber ->
                 selfiePrefs.setWrongTries(selectNumber)
-                val tires=selfiePrefs.getWrongAttempts()
-                binding.selfieDescription.text="Selfie will be taken after $tires wrong tries"
-
-
-
+                val tires = selfiePrefs.getWrongAttempts()
+                binding.selfieDescription.text = "Selfie will be taken after $tires wrong tries"
 
 
             }
 
 
-
-
-
-
         }
-
-
-
-
-
 
 
     }

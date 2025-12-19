@@ -48,7 +48,7 @@
     <string name="biometricDescription">User Your Finger Prints To Unlock the App</string>
     <string name="noBMHA">No biometric hardware available</string>
     <string name="noBmh">Device Has no Biometric Hardware</string>
-    <string name="addFingerPrint">No fingerprints enrolled. Set up in settings.</string>
+    <string name="addFingerPrint">Biometric authentication is not set up. You can enable it from your device settings</string>
     <string name="history">History</string>
     <string name="seewho">See who tried to unlock Your phone</string>
     <string name="addTitle">Add Intruder Widget Now</string>
@@ -62,4 +62,10 @@
     <string name="delete_description">Are you sure you want to permanently delete this?</string>
     <string name="delete_photo">Delete Photo?</string>
     <string name="delete">Delete</string>
+    <string name="no_intrusions">No Intrusions</string>
+    <string name="enjoy">Enjoy All Features Ads Free,Unlimited</string>
+    <string name="adfre">Enjoy 100% ads free experience</string>
+    <string name="unlimited">Unlimited Intruder Detection</string>
+    <string name="hide">Hide App behind smart fake icons</string>
+    <string name="sub">Auto renewable ,Cancel anytime before 24 hours subscription ends</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.thirdeye.service
 
+import android.Manifest
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
@@ -20,6 +21,7 @@ import android.os.Build
 import android.os.Handler
 import android.os.HandlerThread
 import android.util.Log
+import androidx.annotation.RequiresPermission
 import androidx.core.content.ContextCompat
 import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.data.localData.RingtonePrefs
@@ -61,6 +63,7 @@ class CameraCaptureService : Service() {
     private lateinit var repo: EncryptedStorageRepository
     private var appPendingIntent: PendingIntent? = null
 
+    @RequiresPermission(Manifest.permission.CAMERA)
     override fun onCreate() {
         super.onCreate()
         Instance = this
@@ -113,6 +116,7 @@ class CameraCaptureService : Service() {
         player.stop()
     }
 
+    @RequiresPermission(Manifest.permission.CAMERA)
     private fun openCamera() {
         val manager = getSystemService(CAMERA_SERVICE) as CameraManager
         val frontCameraId = manager.cameraIdList.first {
@@ -183,19 +187,41 @@ class CameraCaptureService : Service() {
         captureSession ?: return
 
 
-        bgHandler.postDelayed({
-            val request = cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)?.apply {
-                addTarget(imageReader!!.surface)
-                set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
-                set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
-                set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
-                set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_FAST)
-            }?.build()
+        val manager = getSystemService(CAMERA_SERVICE) as CameraManager
+        val characteristics = manager.getCameraCharacteristics(cameraDevice!!.id)
+        val sensorOrientation = characteristics.get(CameraCharacteristics.SENSOR_ORIENTATION) ?: 0
+        val lensFacing = characteristics.get(CameraCharacteristics.LENS_FACING) ?: CameraCharacteristics.LENS_FACING_FRONT
 
-            request?.let { captureSession?.capture(it, null, bgHandler) }
 
-        }, 200)
+        val windowManager = getSystemService(Context.WINDOW_SERVICE) as android.view.WindowManager
+        val deviceRotation = when (windowManager.defaultDisplay.rotation) {
+            android.view.Surface.ROTATION_0 -> 0
+            android.view.Surface.ROTATION_90 -> 90
+            android.view.Surface.ROTATION_180 -> 180
+            android.view.Surface.ROTATION_270 -> 270
+            else -> 0
+        }
+
+
+        val jpegOrientation = if (lensFacing == CameraCharacteristics.LENS_FACING_FRONT) {
+            (sensorOrientation + deviceRotation) % 360
+        } else {
+            (sensorOrientation - deviceRotation + 360) % 360
+        }
+
+
+        val request = cameraDevice?.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE)?.apply {
+            addTarget(imageReader!!.surface)
+            set(CaptureRequest.CONTROL_AF_MODE, CaptureRequest.CONTROL_AF_MODE_CONTINUOUS_PICTURE)
+            set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
+            set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
+            set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_FAST)
+            set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation)  // <-- proper orientation
+        }?.build()
+
+        request?.let { captureSession?.capture(it, null, bgHandler) }
     }
+
 
 
 

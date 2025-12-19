@@ -13,20 +13,20 @@
         android:scaleType="centerCrop"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:src="@drawable/blurbg" /> <!-- placeholder image -->
+        android:src="@drawable/blurbg" />
 
-    <!-- Intrusion State -->
+
     <TextView
         android:id="@+id/tvIntrusionState"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No Intrusions"
+        android:text="@string/no_intrusions"
         android:textColor="@color/white"
         android:textStyle="bold"
         android:layout_toEndOf="@id/ivIntruder"
         android:layout_marginStart="12dp"/>
 
-    <!-- Last Intrusion Time -->
+
     <TextView
         android:id="@+id/tvLastIntrusionTime"
         android:layout_width="wrap_content"

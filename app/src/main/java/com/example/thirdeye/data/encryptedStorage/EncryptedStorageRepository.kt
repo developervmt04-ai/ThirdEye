@@ -68,4 +68,6 @@ class EncryptedStorageRepository(private val context: Context) {
     fun deleteImage(file: File): Boolean=file.delete()
 
 
+
+
 }

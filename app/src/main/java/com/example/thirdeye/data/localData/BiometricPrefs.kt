@@ -11,8 +11,8 @@ class BiometricPrefs(context: Context) {
     }
     fun setBiometricKeyEnabled(enabled: Boolean) {
 
-        pref.edit().putBoolean(Constants.LOCK_KEY,enabled)
-    }
+        pref.edit().putBoolean(Constants.LOCK_KEY,enabled).apply()    }
+
 
 
 
