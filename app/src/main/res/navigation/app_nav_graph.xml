@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/app_nav_graph"
-    app:startDestination="@id/payWallFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/alarmFragment"
@@ -102,9 +102,22 @@
     <fragment
         android:id="@+id/languageSelectionFragment"
         android:name="com.example.thirdeye.ui.onboarding.LanguageSelectionFragment"
-        android:label="LanguageSelectionFragment" />
+        android:label="LanguageSelectionFragment" >
+        <action
+            android:id="@+id/action_languageSelectionFragment_to_gettingStartedFragment"
+            app:destination="@id/gettingStartedFragment" />
+    </fragment>
     <fragment
         android:id="@+id/payWallFragment"
-        android:name="com.example.thirdeye.ui.paywal.PayWallFragment"
+        android:name="com.example.thirdeye.ui.onboarding.paywall.PayWallFragment"
         android:label="PayWallFragment" />
+    <fragment
+        android:id="@+id/gettingStartedFragment"
+        android:name="com.example.thirdeye.ui.onboarding.GettingStartedFragment"
+        android:label="fragment_getting_started"
+        tools:layout="@layout/fragment_getting_started" >
+        <action
+            android:id="@+id/action_gettingStartedFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
 </navigation>

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.example.thirdeye.R
 import com.example.thirdeye.data.localData.SecurityPrefs
 import com.example.thirdeye.databinding.FragmentGettingStartedBinding
@@ -29,6 +30,14 @@ class GettingStartedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        securityPre= SecurityPrefs(requireContext())
+        binding.btnNext.setOnClickListener {
+            findNavController().navigate(R.id.action_gettingStartedFragment_to_homeFragment)
+         securityPre.isFirstLaunch=false
+
+
+
+        }
 
 
 

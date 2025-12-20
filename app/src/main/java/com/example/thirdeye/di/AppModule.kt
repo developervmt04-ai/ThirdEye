@@ -6,6 +6,7 @@ import com.example.thirdeye.data.localData.LockImagePrefs
 import com.example.thirdeye.data.localData.db.IntruderDB
 import com.example.thirdeye.data.localData.db.IntruderDao
 import com.example.thirdeye.ui.intruders.IntruderRepo
+import com.example.thirdeye.ui.onboarding.paywall.PlansRepo
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -42,6 +43,10 @@ object AppModule {
     fun providesLockImagePrefs(
         @ApplicationContext app: Context
     ): LockImagePrefs = LockImagePrefs(app)
+    @Provides
+    @Singleton
+    fun providePlansRepo(): PlansRepo = PlansRepo()
+
 
 
 

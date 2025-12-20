@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.thirdeye.MainActivity
+
 import com.example.thirdeye.R
 import com.example.thirdeye.biometrics.BiometricHelper
 import com.example.thirdeye.data.localData.BiometricPrefs
@@ -47,7 +48,15 @@ class SplashActivity : AppCompatActivity() {
     private fun startMain() {
         if (navigated) return
         navigated = true
-        startActivity(Intent(this, MainActivity::class.java))
+
+        val mainIntent = Intent(this, MainActivity::class.java)
+
+        intent.getStringExtra("openFragment")?.let { fragmentKey ->
+            mainIntent.putExtra("openFragment", fragmentKey)
+        }
+
+        startActivity(mainIntent)
         finish()
     }
+
 }

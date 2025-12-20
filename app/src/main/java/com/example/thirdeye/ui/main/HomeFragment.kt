@@ -1,5 +1,4 @@
 package com.example.thirdeye.ui.main
-
 import android.graphics.Color
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,28 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.example.thirdeye.MainActivity
+
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentHomeBinding
 import com.example.thirdeye.service.CameraCaptureService
 import com.example.thirdeye.ui.dialogs.AddWidgetDialog
 import com.example.thirdeye.ui.dialogs.AudibleDialog
-import com.example.thirdeye.ui.dialogs.FingerPrintDialog
-import com.example.thirdeye.ui.dialogs.permissionsDialog.PermissionDialog
 import com.example.thirdeye.ui.intruders.IntruderPhotosViewModel
+import com.example.thirdeye.ui.timer.TimerViewModel
 import com.example.thirdeye.ui.widget.AddWidget
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import kotlin.concurrent.timer
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var audioDialog: AudibleDialog
     private lateinit var addWidgetDialog: AddWidgetDialog
-
     private lateinit var homeAdapter: HomePagerAdapter
     val viewModel: IntruderPhotosViewModel by activityViewModels()
+    private var jobTimer: Job?=null
+    private val timerViewModel: TimerViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +48,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        observeTimer()
         homeAdapter = HomePagerAdapter()
         binding.homePager.adapter = homeAdapter
+
+
+
+        val fragmentKey = requireActivity().intent.getStringExtra("openFragment")
+        if (fragmentKey == "intruder") {
+            findNavController().navigate(R.id.action_homeFragment_to_intrudersFragment)
+        }
 
 
 
@@ -125,6 +134,7 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
 
         }
+
         binding.intruderDropdown.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_intrudersFragment)
 
@@ -145,6 +155,21 @@ class HomeFragment : Fragment() {
 
         }
 
+    }
+
+    private fun observeTimer() {
+        jobTimer=viewLifecycleOwner.lifecycleScope.launch {
+
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                timerViewModel.secondLeft.collect {seconds->
+                    val min=seconds/60
+                    val sec=seconds%60
+                    binding.tvTimer.text=String.format("%02d:%02d",min,sec)
+                }
+
+            }
+        }
     }
 
 

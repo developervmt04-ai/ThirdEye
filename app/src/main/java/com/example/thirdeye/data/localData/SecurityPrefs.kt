@@ -10,6 +10,8 @@ class SecurityPrefs(context: Context) {
 
     val sharedPref= context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
+
+
     var isFirstLaunch: Boolean
         get() = sharedPref.getBoolean(KEY_IS_FIRST_LAUNCH,true)
         set(value) = sharedPref.edit().putBoolean(KEY_IS_FIRST_LAUNCH,value).apply()

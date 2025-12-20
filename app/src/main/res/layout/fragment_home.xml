@@ -3,16 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    >
-
+    android:fitsSystemWindows="true">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/mainToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-
         android:layout_alignParentLeft="true"
         android:background="@color/appBgColor">
 
@@ -44,7 +41,6 @@
                 android:textStyle="bold" />
 
             <ImageView
-
                 android:id="@+id/camouflageIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -55,7 +51,6 @@
         </LinearLayout>
     </com.google.android.material.appbar.MaterialToolbar>
 
-
     <View
         android:id="@+id/toolbarDivider"
         android:layout_width="match_parent"
@@ -63,7 +58,6 @@
         android:elevation="4dp"
         android:layout_below="@id/mainToolbar"
         android:background="@color/dividerColor" />
-
 
     <androidx.cardview.widget.CardView
         android:id="@+id/mainCard"
@@ -104,7 +98,6 @@
                         android:layout_height="match_parent"
                         android:showDividers="middle"
                         android:divider="@drawable/vertical_spacing">
-                        >
                         <ImageView
                             android:id="@+id/imgEmpty"
                             android:layout_width="wrap_content"
@@ -118,9 +111,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/emptyIntruders" />
-
-
-
                     </LinearLayout>
                 </RelativeLayout>
             </androidx.cardview.widget.CardView>
@@ -128,12 +118,26 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/homePager"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                />
-
+                android:layout_height="match_parent" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
+
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/actionButtons"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="414dp"
+        android:background="@drawable/timer_design"
+        android:elevation="20dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="00:00"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/actionButtons"
@@ -145,7 +149,7 @@
         android:gravity="center"
         android:weightSum="3">
 
-
+        <!-- Add Widget Button -->
         <LinearLayout
             android:id="@+id/addWidgetBtn"
             android:layout_width="0dp"
@@ -154,13 +158,11 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="12dp">
-
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/add_widget_icon"
                 app:tint="#FFFFFF" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -170,7 +172,7 @@
                 android:layout_marginTop="8dp" />
         </LinearLayout>
 
-
+        <!-- Turn On Button -->
         <LinearLayout
             android:id="@+id/turnOnBtn"
             android:layout_width="0dp"
@@ -182,15 +184,11 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
-
                 <View
                     android:id="@+id/outerRing"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:background="@drawable/ring_off" />
-
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/powerButton"
                     android:layout_width="70dp"
@@ -201,18 +199,14 @@
                     android:backgroundTint="#2c3e5c"
                     android:clickable="true"
                     android:focusable="true">
-
                     <ImageView
                         android:id="@+id/powerIcon"
                         android:layout_width="35dp"
                         android:layout_height="35dp"
                         android:layout_gravity="center"
                         android:src="@drawable/power_on" />
-
                 </androidx.cardview.widget.CardView>
             </RelativeLayout>
-
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -222,7 +216,7 @@
                 android:layout_marginTop="8dp" />
         </LinearLayout>
 
-
+        <!-- Alarm Button -->
         <LinearLayout
             android:id="@+id/alarmBtn"
             android:layout_width="0dp"
@@ -231,13 +225,11 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="12dp">
-
             <ImageView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/alram_icon"
                 app:tint="#FFFFFF" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -247,7 +239,6 @@
                 android:layout_marginTop="8dp" />
         </LinearLayout>
     </LinearLayout>
-
 
     <TextView
         android:id="@+id/intruderDropdown"
@@ -272,14 +263,12 @@
         android:layout_centerInParent="true"
         android:orientation="vertical"
         android:gravity="center">
-
         <ImageView
             android:id="@+id/intruderIcon"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/emptyicon"
             app:tint="#d4a574" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

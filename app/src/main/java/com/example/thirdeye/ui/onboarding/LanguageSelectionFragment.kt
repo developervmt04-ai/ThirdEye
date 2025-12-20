@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.TextView
+import androidx.navigation.fragment.findNavController
 import com.example.thirdeye.R
 import com.example.thirdeye.data.localData.SecurityPrefs
 import com.example.thirdeye.data.models.LanguageData
@@ -41,6 +42,9 @@ class LanguageSelectionFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         securityPrefs= SecurityPrefs(requireContext())
+        binding.btnContinue.setOnClickListener {
+            findNavController().navigate(R.id.action_languageSelectionFragment_to_gettingStartedFragment)
+        }
 
         languages=listOf(
             LanguageData("English",R.drawable.englishicon),
