@@ -1,6 +1,8 @@
 package com.example.thirdeye.biometrics
 
 
+import android.content.Intent
+import android.provider.Settings
 import android.widget.Toast
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
@@ -27,21 +29,37 @@ class BiometricHelper(private val activity: FragmentActivity) {
             }
 
             BiometricManager.BIOMETRIC_ERROR_UNSUPPORTED -> {
+
+
+
                 Toast.makeText(activity, activity.getString(R.string.noBmh), Toast.LENGTH_SHORT)
                     .show()
+
+
                 false
             }
 
 
             BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED -> {
-                Toast.makeText(
-                    activity,
-                    activity.getString(R.string.addFingerPrint),
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(activity, activity.getString(R.string.addFingerPrint), Toast.LENGTH_SHORT).show()
+
+                try {
+
+                    val enrollIntent = Intent(Settings.ACTION_FINGERPRINT_ENROLL)
+                    activity.startActivity(enrollIntent)
+                } catch (e: Exception) {
+                    val fallbackIntent = Intent(Settings.ACTION_BIOMETRIC_ENROLL).apply {
+                        putExtra(
+                            Settings.EXTRA_BIOMETRIC_AUTHENTICATORS_ALLOWED,
+                            BiometricManager.Authenticators.BIOMETRIC_STRONG or
+                                    BiometricManager.Authenticators.DEVICE_CREDENTIAL
+                        )
+                    }
+                    activity.startActivity(fallbackIntent)
+                }
+
                 false
             }
-
             else -> false
 
         }

@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.thirdeye.constants.Constants.KEY_IS_FIRST_LAUNCH
 import com.example.thirdeye.constants.Constants.KEY_SELECTED_LANGUAGE
 import com.example.thirdeye.constants.Constants.PREF_NAME
+import androidx.core.content.edit
 
 class SecurityPrefs(context: Context) {
 
@@ -14,11 +15,11 @@ class SecurityPrefs(context: Context) {
 
     var isFirstLaunch: Boolean
         get() = sharedPref.getBoolean(KEY_IS_FIRST_LAUNCH,true)
-        set(value) = sharedPref.edit().putBoolean(KEY_IS_FIRST_LAUNCH,value).apply()
+        set(value) = sharedPref.edit { putBoolean(KEY_IS_FIRST_LAUNCH, value) }
 
     var selectedLanguage: String?
         get() = sharedPref.getString(KEY_SELECTED_LANGUAGE,"English")?:"English"
-        set(value) = sharedPref.edit().putString(KEY_SELECTED_LANGUAGE,value).apply()
+        set(value) = sharedPref.edit { putString(KEY_SELECTED_LANGUAGE, value) }
 
 
 

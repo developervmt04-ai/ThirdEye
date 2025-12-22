@@ -6,7 +6,7 @@ import com.example.thirdeye.constants.Constants.SELFIE_PREF
 import androidx.core.content.edit
 import com.example.thirdeye.constants.Constants.WRONG_ATTEMPTS
 
-class IntruderSelfiePrefs(context: Context) {
+class  IntruderSelfiePrefs(context: Context) {
 
     val prefs=context.getSharedPreferences(SELFIE_PREF, Context.MODE_PRIVATE)
 

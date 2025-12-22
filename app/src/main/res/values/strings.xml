@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ThirdEye</string>
+    <string name="app_name">Intruder Alert - Who Touched</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="emptyIntrusion">No Intruder Found</string>
     <string name="Add_Widget">Add Widget</string>

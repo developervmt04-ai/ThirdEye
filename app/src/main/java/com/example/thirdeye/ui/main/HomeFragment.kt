@@ -10,7 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-
+import com.example.thirdeye.MainActivity
 import com.example.thirdeye.R
 import com.example.thirdeye.databinding.FragmentHomeBinding
 import com.example.thirdeye.service.CameraCaptureService
@@ -51,13 +51,6 @@ class HomeFragment : Fragment() {
         observeTimer()
         homeAdapter = HomePagerAdapter()
         binding.homePager.adapter = homeAdapter
-
-
-
-        val fragmentKey = requireActivity().intent.getStringExtra("openFragment")
-        if (fragmentKey == "intruder") {
-            findNavController().navigate(R.id.action_homeFragment_to_intrudersFragment)
-        }
 
 
 
@@ -134,7 +127,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.action_homeFragment_to_settingFragment)
 
         }
-
         binding.intruderDropdown.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_intrudersFragment)
 

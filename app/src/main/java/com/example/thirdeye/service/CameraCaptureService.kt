@@ -61,7 +61,7 @@ class CameraCaptureService : Service() {
     val imageTimestamps = mutableMapOf<String, Long>()
 
     private lateinit var repo: EncryptedStorageRepository
-    private var appPendingIntent: PendingIntent? = null
+
 
     @RequiresPermission(Manifest.permission.CAMERA)
     override fun onCreate() {
@@ -112,9 +112,7 @@ class CameraCaptureService : Service() {
         val uri = pref.getAlarmTone()
         player.play(uri)
     }
-    fun stopAlarm() {
-        player.stop()
-    }
+
 
     @RequiresPermission(Manifest.permission.CAMERA)
     private fun openCamera() {
