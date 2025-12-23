@@ -55,6 +55,9 @@ class CameraCaptureService : Service() {
     private lateinit var bgThread: HandlerThread
     private lateinit var bgHandler: Handler
     private lateinit var player: AlarmPlayer
+    @Volatile
+    var isCameraReady = false
+
 
 
 
@@ -67,6 +70,7 @@ class CameraCaptureService : Service() {
     override fun onCreate() {
         super.onCreate()
         Instance = this
+        isCameraReady=false
         player= AlarmPlayer(this)
 
         repo= EncryptedStorageRepository(applicationContext)
@@ -86,6 +90,7 @@ class CameraCaptureService : Service() {
                 val bytes = imageToByteArray(it)
                 showNotification()
 
+                isCameraReady = true
                 val (file, timeStamp) = repo.saveEncryptedImage(bytes)
 
 
@@ -155,6 +160,8 @@ class CameraCaptureService : Service() {
                 override fun onConfigured(session: CameraCaptureSession) {
                     captureSession = session
 
+
+
                 }
 
 
@@ -214,7 +221,7 @@ class CameraCaptureService : Service() {
             set(CaptureRequest.CONTROL_AE_MODE, CaptureRequest.CONTROL_AE_MODE_ON)
             set(CaptureRequest.CONTROL_AWB_MODE, CaptureRequest.CONTROL_AWB_MODE_AUTO)
             set(CaptureRequest.COLOR_CORRECTION_MODE, CaptureRequest.COLOR_CORRECTION_MODE_FAST)
-            set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation)  // <-- proper orientation
+            set(CaptureRequest.JPEG_ORIENTATION, jpegOrientation)
         }?.build()
 
         request?.let { captureSession?.capture(it, null, bgHandler) }

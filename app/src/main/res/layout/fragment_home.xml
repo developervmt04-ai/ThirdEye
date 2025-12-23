@@ -122,15 +122,12 @@
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
-
     <TextView
         android:id="@+id/tvTimer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/actionButtons"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="414dp"
         android:background="@drawable/timer_design"
         android:elevation="20dp"
         android:fontFamily="sans-serif-medium"
@@ -181,14 +178,25 @@
             android:orientation="vertical"
             android:gravity="center"
             android:padding="12dp">
+
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-                <View
+
+
+                <com.google.android.material.progressindicator.CircularProgressIndicator
                     android:id="@+id/outerRing"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
-                    android:background="@drawable/ring_off" />
+                    android:indeterminate="false"
+                    android:progress="0"
+                    app:indicatorSize="80dp"
+                    app:trackThickness="6dp"
+                    app:indicatorColor="@color/dividerColor"
+                    app:trackColor="#333333" />
+
+
+
                 <androidx.cardview.widget.CardView
                     android:id="@+id/powerButton"
                     android:layout_width="70dp"
@@ -196,9 +204,10 @@
                     android:layout_centerInParent="true"
                     app:cardCornerRadius="35dp"
                     app:cardElevation="4dp"
-                    android:backgroundTint="#2c3e5c"
+                    android:backgroundTint="@color/appBgColor"
                     android:clickable="true"
                     android:focusable="true">
+
                     <ImageView
                         android:id="@+id/powerIcon"
                         android:layout_width="35dp"
@@ -206,7 +215,9 @@
                         android:layout_gravity="center"
                         android:src="@drawable/power_on" />
                 </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -214,6 +225,7 @@
                 android:textColor="#FFFFFF"
                 android:textSize="12sp"
                 android:layout_marginTop="8dp" />
+
         </LinearLayout>
 
         <!-- Alarm Button -->

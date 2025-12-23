@@ -15,6 +15,8 @@ import com.example.thirdeye.ui.dialogs.DeleteDialog
 import com.example.thirdeye.ui.intruders.IntruderPhotosViewModel
 import com.example.thirdeye.utils.ShareHelper
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 class IntruderDetailFragment : Fragment() {
@@ -40,7 +42,7 @@ class IntruderDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val intruderData=args.images
-        binding.image.setImageBitmap(intruderData?.bitmap)
+        binding.homeImage.setImageBitmap(intruderData?.bitmap)
 
         binding.deleteIcon.setOnClickListener {
             lifecycleScope.launch {
@@ -72,6 +74,20 @@ class IntruderDetailFragment : Fragment() {
                 )
             }
         }
+
+        binding.showGrid.setOnClickListener {
+            findNavController().navigate(R.id.action_intruderDetailFragment_to_intrudersFragment)
+
+        }
+        val dateFormater= SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+
+        val timerFormatter= SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+
+        val date =intruderData?.timeStamp
+
+        binding.time.text=timerFormatter.format(date)
+        binding.date.text=dateFormater.format(date)
+
 
 
 

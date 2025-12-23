@@ -41,6 +41,8 @@ object AttemptsDialog {
             .setCancelable(true)
             .create()
 
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
 
 
         radioGroup.setOnCheckedChangeListener { group, checkedId ->

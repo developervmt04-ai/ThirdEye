@@ -7,6 +7,7 @@ import com.example.thirdeye.MainActivity
 import com.example.thirdeye.R
 import com.example.thirdeye.biometrics.BiometricHelper
 import com.example.thirdeye.data.localData.BiometricPrefs
+import com.example.thirdeye.ui.dialogs.biometricDialogs.UnlockDialog
 
 class SplashActivity : AppCompatActivity() {
 
@@ -14,6 +15,7 @@ class SplashActivity : AppCompatActivity() {
 
     private lateinit var biometricHelper: BiometricHelper
     private lateinit var biometricPrefs: BiometricPrefs
+    private lateinit var dialog: UnlockDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,27 +23,31 @@ class SplashActivity : AppCompatActivity() {
 
         biometricHelper = BiometricHelper(this)
         biometricPrefs = BiometricPrefs(this)
-
-
-        if (savedInstanceState != null) return
+        dialog = UnlockDialog(this)
     }
 
     override fun onResume() {
         super.onResume()
 
+        if (biometricPrefs.isBiometricEnabled()) {
+            showUnlockDialog()
+        } else {
+            startMain()
+        }
+    }
 
-        window.decorView.post {
-            if (biometricPrefs.isBiometricEnabled()) {
-
+    private fun showUnlockDialog() {
+        dialog.setTitle(getString(R.string.Fingerprint_lock_text))
+            .setDescription(getString(R.string.safa))
+            .onClick {
                 biometricHelper.authenticate(
                     onSuccess = { startMain() },
-                    onCancel = { finish() }
+                    onCancel = {
+                        finishAffinity()
+                    }
                 )
-            } else {
-
-                startMain()
             }
-        }
+            .show()
     }
 
     private fun startMain() {
@@ -51,3 +57,4 @@ class SplashActivity : AppCompatActivity() {
         finish()
     }
 }
+

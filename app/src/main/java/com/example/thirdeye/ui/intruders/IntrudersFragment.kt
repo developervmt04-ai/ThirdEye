@@ -15,7 +15,7 @@ import com.example.thirdeye.R
 import com.example.thirdeye.data.encryptedStorage.EncryptedStorageRepository
 import com.example.thirdeye.data.models.IntrudersImages
 import com.example.thirdeye.databinding.FragmentIntrudersBinding
-import com.example.thirdeye.ui.dialogs.FingerPrintDialog
+import com.example.thirdeye.ui.dialogs.biometricDialogs.FingerPrintDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 

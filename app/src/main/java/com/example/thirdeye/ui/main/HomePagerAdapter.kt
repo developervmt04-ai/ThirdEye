@@ -51,15 +51,20 @@ class HomePagerAdapter(): RecyclerView.Adapter<HomePagerAdapter.ViewHoler>() {
 
         }
         else {
-            val dateTime = SimpleDateFormat("dd MMM yyyy HH:mm:ss", Locale.getDefault())
-                .format(Date(items.timeStamp))
-            holder.binding.date.text = dateTime
+            val dateFormater= SimpleDateFormat("dd MMMM yyyy", Locale.ENGLISH)
+
+            val timerFormatter= SimpleDateFormat("hh:mm a", Locale.ENGLISH)
+            val date = Date(items.timeStamp)
+            holder.binding.date.text = dateFormater.format(date)
+            holder.binding.time.text=timerFormatter.format(date)
             holder.binding.homeImage.setImageBitmap(items.bitmap)
             holder.binding.root.setOnClickListener {
                 onClick?.invoke(items)
 
+            }
+            holder.binding.intruderDetails.setOnClickListener {
 
-
+                onDetailsClicked?.invoke(items)
             }
 
 
@@ -95,6 +100,8 @@ class HomePagerAdapter(): RecyclerView.Adapter<HomePagerAdapter.ViewHoler>() {
     var onWatchAdClicked:((IntrudersImages)-> Unit)?=null
 
     var onPremiumClicked:((IntrudersImages)-> Unit)?=null
+
+    var onDetailsClicked:((IntrudersImages)-> Unit)?=null
 
 
     inner class ViewHoler(val binding: HomePagerLayoutBinding): RecyclerView.ViewHolder(binding.root){

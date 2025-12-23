@@ -24,6 +24,8 @@ object DeleteDialog {
         deleteBtn.setOnClickListener { onYes.invoke()
         dialog.dismiss()}
         dialog.show()
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
 
 
 

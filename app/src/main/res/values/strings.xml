@@ -68,4 +68,9 @@
     <string name="unlimited">Unlimited Intruder Detection</string>
     <string name="hide">Hide App behind smart fake icons</string>
     <string name="sub">Auto renewable ,Cancel anytime before 24 hours subscription ends</string>
+    <string name="limit">Set wrong attempts limit to capture intruder image</string>
+    <string name="safa">Confirm your identity using your figner print to unlock app safely and quickly</string>
+    <string name="details">Details</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
 </resources>

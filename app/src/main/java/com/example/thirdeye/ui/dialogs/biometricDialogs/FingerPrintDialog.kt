@@ -1,11 +1,9 @@
-package com.example.thirdeye.ui.dialogs
+package com.example.thirdeye.ui.dialogs.biometricDialogs
 
 import android.app.Dialog
 import android.content.Context
 import android.view.LayoutInflater
-import androidx.biometric.FingerprintDialogFragment
 import com.example.thirdeye.R
-
 import com.example.thirdeye.databinding.BiometricDialogBinding
 
 class FingerPrintDialog (context: Context){

@@ -4,6 +4,12 @@ object Constants {
 
 
 
+
+    //button prefs
+
+    const val POWER_BTN_PREF="button_prefs"
+
+
     //
     const val dirName="Intruders"
 

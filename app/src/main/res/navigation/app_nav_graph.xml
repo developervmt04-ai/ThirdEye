@@ -47,6 +47,9 @@
         <action
             android:id="@+id/action_homeFragment_to_payWallFragment"
             app:destination="@id/payWallFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_intruderDetailFragment"
+            app:destination="@id/intruderDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/camouflageFragment"
@@ -88,6 +91,9 @@
         <action
             android:id="@+id/action_intruderDetailFragment_to_historyFragment"
             app:destination="@id/historyFragment" />
+        <action
+            android:id="@+id/action_intruderDetailFragment_to_intrudersFragment"
+            app:destination="@id/intrudersFragment" />
     </fragment>
     <fragment
         android:id="@+id/historyFragment"
